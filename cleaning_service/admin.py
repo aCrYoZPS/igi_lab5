@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (ServiceType, Service, Client,
                      Staff, StaffSpecialization,
-                     PromoCode, Order, OrderItem)
+                     PromoCode, Order, OrderItem,
+                     Article)
 
 
 class OrderItemInline(admin.TabularInline):
@@ -75,3 +76,8 @@ class PromoCodeAdmin(admin.ModelAdmin):
     list_display = ('code', 'discount_type', 'value', 'valid_from', 'valid_to', 'is_active', 'used_count', 'max_uses')
     list_filter = ('discount_type', 'is_active', 'valid_from', 'valid_to')
     search_fields = ('code',)
+
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    pass

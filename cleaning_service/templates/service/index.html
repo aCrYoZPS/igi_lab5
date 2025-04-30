@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}HELLO{% endblock %}
+
+{% block content %}
+    {% for article in all_articles %}
+        <div>
+            <h2>{{article.title}}</h2>
+            Author: {{article.author}} <br>
+        </div>
+    {% endfor %}
+{% endblock %}

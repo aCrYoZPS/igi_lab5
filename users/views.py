@@ -13,8 +13,6 @@ def signup(request):
             redirect_url = getattr(settings, 'LOGIN_REDIRECT_URL', '/')
             return redirect(redirect_url)
         else:
-            # Form is invalid, re-render the page with the form and errors
-            # The form instance now contains error messages
             pass
     else:
         form = CustomUserCreationForm()
