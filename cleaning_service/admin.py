@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (ServiceType, Service, Client,
                      Staff, StaffSpecialization,
                      PromoCode, Order, OrderItem,
-                     Article)
+                     FAQ, Vacancy, Review, About,
+                     PrivacyPolicy)
 
 
 class OrderItemInline(admin.TabularInline):
@@ -78,6 +79,26 @@ class PromoCodeAdmin(admin.ModelAdmin):
     search_fields = ('code',)
 
 
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
+@admin.register(PrivacyPolicy)
+class PrivacyPolicyAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Vacancy)
+class VacancyAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
     pass

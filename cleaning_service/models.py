@@ -1,7 +1,10 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, RegexValidator
 import uuid
+from datetime import datetime
+
+phone_number_validator = RegexValidator(r"^\+375(:?44|29|33)\d{7}$")
 
 # --- Service Related Models ---
 
@@ -38,12 +41,11 @@ class Client(models.Model):
         COMPANY = 'COMPANY', 'Company'
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile',
-                                null=True, blank=True,
-                                help_text="Link to Django User for login (optional for initial entry)")
+                                null=True, blank=True)
     name = models.CharField(max_length=200, help_text="Customer name or Company name")
     contact_person = models.CharField(max_length=150, blank=True, null=True, help_text="Contact person if company")
     contact_number = models.CharField(max_length=20)
-    email = models.EmailField(unique=True, blank=True, null=True)  # Can be populated from User later
+    email = models.EmailField(unique=True, blank=True, null=True)
     client_type = models.CharField(max_length=10, choices=ClientType.choices, default=ClientType.PRIVATE)
     address = models.TextField(blank=True, null=True, help_text="Primary address (optional)")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -169,12 +171,57 @@ class OrderItem(models.Model):
         super().save(*args, **kwargs)
 
 
-class Article(models.Model):
-    """Represents an article"""
-    title = models.CharField(max_length=255)
+class FAQ(models.Model):
+    "Represents FAQ entry"
+    question = models.CharField(max_length=256)
+    answer = models.CharField(max_length=256)
+    answer_date = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return f"Q: {self.question}\nA: {self.answer}"
+
+
+class Vacancy(models.Model):
+    "Represents a vacancy"
+    job_title = models.CharField(max_length=256)
+    job_description = models.TextField()
+    job_type = models.ForeignKey(ServiceType, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.job_title
+
+
+class Review(models.Model):
+    "Represents a review"
+    title = models.CharField(max_length=256)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
+    score = models.IntegerField(
+        validators=[
+            MinValueValidator(1, message="Value must be at least 1."),
+            MaxValueValidator(10, message="Value cannot exceed 10.")
+        ],
+        default=1
+    )
 
     def __str__(self):
-        return f"{self.title} by {str(self.author)}. Published on {self.publication_date.strftime("%d/%m/%Y %H:%M:%S")}"
+        return f"Review: {self.title}"
+
+
+class About(models.Model):
+    "Represents 'About us' info"
+    logo = models.URLField(blank=True, null=True)
+    history = models.TextField(null=True, blank=True)
+    contact_info = models.TextField()
+
+    def __str__(self):
+        return "About Info"
+
+
+class PrivacyPolicy(models.Model):
+    "Represents privacy policy info"
+    policy_content = models.TextField()
+
+    def __str__(self):
+        return "Privacy policy"

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+
+{% block content %}
+    <div class="question_answer">
+        {% if about.logo %}
+            <img src="{{about.logo}}" alt="logo" width="600">
+        {% endif %}
+        {% if about.history %}
+            <h2>Our history:</h2>
+            <p>{{about.history}}</p>
+        {% endif %}
+        <h2>Contact info:</h2>
+        <p>{{about.contact_info}}</p>
+    </div>
+{% endblock %}

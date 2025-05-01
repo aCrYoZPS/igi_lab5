@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Article{% endblock %}
+
+{% block content %}
+    <style>
+        .button-style {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button-style:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <article class="article">
+        <h1>{{article.title}}</h1>
+        <h4>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h4>
+        {% if article.img %}
+            <img src="{{ article.img }}" alt="article pic" width="600">
+        {% else %}
+            {% load static %}
+            <img src="{% static 'images/default.jpeg' %}" 
+                 alt="default pic"
+                 width="200">
+        {% endif %}
+        <p>{{article.content}}</p>
+        <button onclick="window.location.href='{% url 'home' %}'"
+                class="button-style">
+           Back to home 
+        </button>
+    </article>
+{% endblock %}
