@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cleaning_service',
     'users',
-    'blog'
+    'blog',
+    'reviews'
 ]
 
 MIDDLEWARE = [

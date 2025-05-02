@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (ServiceType, Service, Client,
                      Staff, StaffSpecialization,
                      PromoCode, Order, OrderItem,
-                     FAQ, Vacancy, Review, About,
+                     FAQ, Vacancy, About,
                      PrivacyPolicy)
 
 
@@ -91,11 +91,6 @@ class FAQAdmin(admin.ModelAdmin):
 
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
     pass
 
 

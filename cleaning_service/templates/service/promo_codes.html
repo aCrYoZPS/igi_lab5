@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}FAQ{% endblock %}
+
+
+{% block content %}
+    <h2>Active promocodes:</h2>
+    {% if valid_codes %}
+        {% for code in valid_codes %}
+            <div class="promocode">
+                <h3>{{code}} </h3>
+                <p>
+                    valid from {{code.valid_from|date:"d/m/Y"}}<br>
+                    valid to {{code.valid_from|date:"d/m/Y"}}<br>
+                </p>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Sorry, no promocodes now :[</p>
+    {% endif %}
+    {% if invalid_codes %}
+        <h2>Inactive promocodes:</h2>
+        {% for code in invalid_codes %}
+            <div class="promocode">
+                <h3>{{code}} </h3>
+                <p>
+                    expiration date {{code.valid_to|date:"d/m/Y"}}<br>
+                </p>
+                <hr>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
