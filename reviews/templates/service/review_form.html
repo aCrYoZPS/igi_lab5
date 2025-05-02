@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Reviews{% endblock %}
+
+
+{% block content %}
+    <style>
+        .button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <h2>{% if object %}Update{% else %}Create{% endif %} review:</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">
+            {% if object %}Update{% else %}Create{% endif %}
+        </button>
+    </form>
+{% endblock %}

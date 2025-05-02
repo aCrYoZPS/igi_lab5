@@ -25,11 +25,16 @@
             <h3>{{review.title}} | {{review.score}}/10</h3>
             <h4>{{review.author}} {{review.publication_date|date:"d/m/Y"}}</h4>
             <p>{{review.content}}</p>
+            {% if user.is_authenticated and user == review.author %}
+                <a href="{% url 'edit_review' review.pk %}" class="button">
+                    Edit Review
+                </a>
+            {% endif %}
             <hr>
         </div>
     {% endfor %}
     <button onclick="window.location.href='{% url 'add_review' %}'"
             class="button">
-        Read more
+        Leave a review
     </button>
 {% endblock %}
