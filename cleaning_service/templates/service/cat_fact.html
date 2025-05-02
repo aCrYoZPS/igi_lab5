@@ -4,7 +4,11 @@
 
 {% block content %}
     <div class="cat_fact">
-        <h3> Random cat fact: </h3>
-        <p> {{cat_fact}} </p>
+        {% if cat_fact %}
+            <h3> Random cat fact: </h3>
+            <p> {{cat_fact}} </p>
+        {% else %}
+            <p>Sorry, no cat fact today :(</p>
+        {% endif %}
     </div>
 {% endblock %}

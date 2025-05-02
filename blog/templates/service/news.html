@@ -26,16 +26,17 @@
             background-color: #0056b3;
         }
     </style>
-    <h1> YOUR IP IS {{ip}} :)</h1>
-    <div class="article_card">
-        <hr>
-        <h2> {{article.title}} </h2>
-        <h3> By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
-        {{article.summary}} <br>
-        <button onclick="window.location.href='{% url 'article' article.id %}'"
-                class="button-style">
-            Read more
-        </button>
-        <hr>
-    </div>
+    <hr>
+    {% for article in articles %}
+        <div class="article_card">
+            <h2> {{article.title}} </h2>
+            <h3> By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
+            {{article.summary}} <br>
+            <button onclick="window.location.href='{% url 'article' article.id %}'"
+                    class="button-style">
+                Read more
+            </button>
+            <hr>
+        </div>
+    {% endfor %}
 {% endblock %}

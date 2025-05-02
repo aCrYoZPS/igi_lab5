@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from blog.models import Article
-from .models import FAQ, Vacancy, About, PrivacyPolicy
+from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode
+from globals.logging import LoggingMixin
 
 import json
 import requests
+from http import HTTPStatus
 
 
 def index(request):
     response = json.loads(requests.get("https://api.ipify.org?format=json").content)
-    return render(request, "service/index.html", {"articles": Article.objects.all(), "ip": response["ip"]})
+    return render(request, "service/index.html", {"article": Article.objects.last(), "ip": response["ip"]})
 
 
 def privacy_policy(request):
@@ -28,11 +30,26 @@ def about(request):
     return render(request, "service/about.html", {"about": About.objects.last()})
 
 
-class CatFactView(TemplateView):
+class CatFactView(TemplateView, LoggingMixin):
     template_name = "service/cat_fact.html"
 
     def get_context_data(self, **kwargs):
-        response = json.loads(requests.get("https://catfact.ninja/fact").content)
         context = super().get_context_data(**kwargs)
-        context["cat_fact"] = response["fact"]
+        response = requests.get("https://catfact.ninja/fact")
+        if response.status_code != HTTPStatus.OK:
+            self.error("Unable to get cat fact")
+            context["cat_fact"] = None
+        else:
+            response_body = json.loads(response.content)
+            context["cat_fact"] = response_body["fact"]
+        return context
+
+
+class PromoCodeView(TemplateView):
+    template_name = "service/promo_codes.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["valid_codes"] = PromoCode.objects.filter(is_active=True)
+        context["invalid_codes"] = PromoCode.objects.filter(is_active=False)
         return context
