@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}FAQ{% endblock %}
+
+
+{% block content %}
+    <h2>Service types:</h2>
+    {% for service_type in service_types %}
+        <div class="service_type">
+            <h3>{{service_type.name}}</h3>
+            <p>
+                {{service_type.description}}
+            </p>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Privacy policy{% endblock %}
+
+{% block content %}
+    <h2>Your Orders, {{name}}</h2>
+    <ul>
+        {% for order in orders %}
+            <li>
+                {{ order.order_code }} - {{ order.get_status_display }}
+                (Total: ${{ order.total_amount }})
+            </li>
+        {% empty %}
+            <li>No orders found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

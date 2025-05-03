@@ -1,8 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView, CreateView
+from django.db.models import Q
 from blog.models import Article
-from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode
+from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client
+from .filters import ServiceFilter
 from globals.logging import LoggingMixin
+from django_filters.views import FilterView
+from .forms import OrderItemFormSet, OrderForm
 
 import json
 import requests
@@ -53,3 +59,97 @@ class PromoCodeView(TemplateView):
         context["valid_codes"] = PromoCode.objects.filter(is_active=True)
         context["invalid_codes"] = PromoCode.objects.filter(is_active=False)
         return context
+
+
+class ServiceTypeView(TemplateView):
+    template_name = "service/service_types.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["service_types"] = ServiceType.objects.filter()
+        return context
+
+
+class ServiceView(FilterView, ListView):
+    model = Service
+    template_name = 'service/services.html'
+    context_object_name = 'services'
+    filterset_class = ServiceFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.filterset
+        return context
+
+
+class OrderView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = 'orders/orders.html'
+    context_object_name = 'orders'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["name"] = self.request.user.username
+        return context
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_superuser:
+            return Order.objects.all()
+
+        elif hasattr(user, 'staff'):
+            staff = user.staff
+            return Order.objects.filter(
+                Q(created_by=staff) | Q(assigned_staff=staff)
+            ).distinct()
+
+        elif hasattr(user, 'client_profile'):
+            client = user.client_profile
+            return Order.objects.filter(client=client)
+
+        else:
+            return Order.objects.none()
+
+
+class AddOrderView(LoginRequiredMixin, CreateView):
+    model = Order
+    form_class = OrderForm
+    template_name = 'orders/order_create.html'
+    success_url = reverse_lazy("orders")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = OrderItemFormSet(self.request.POST)
+        else:
+            context['formset'] = OrderItemFormSet(
+                queryset=OrderItem.objects.none(),
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        order.client = Client.objects.get(user=self.request.user)
+        order.status = Order.OrderStatus.PENDING
+        order.payment_status = Order.PaymentStatus.UNPAID
+        order.save()
+
+        formset = OrderItemFormSet(
+            self.request.POST,
+            instance=order
+        )
+
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                if not instance.pk:  # Only for new items
+                    instance.price_at_order = instance.service.price
+                instance.save()
+            return super().form_valid(form)
+        else:
+            order.delete()
+            return self.render_to_response(
+                self.get_context_data(form=form, formset=formset)
+            )

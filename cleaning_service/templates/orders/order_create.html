@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <h2>Create New Order</h2>
+  <form method="post">
+    {% csrf_token %}
+    
+    <div>
+      <div>
+        {{ form.as_p }}
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <h5>Services</h5>
+        {{ formset.management_form }}
+        
+        {% for form in formset %}
+          <div>
+            {{ form.as_p }}
+            {% if not forloop.last %}<hr>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div>
+      <button type="submit">
+        Submit Order
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

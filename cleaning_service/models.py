@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 from django.conf import settings
 from django.core.validators import MinValueValidator, RegexValidator
 import uuid
@@ -144,11 +145,27 @@ class Order(models.Model):
         return f"Order {self.order_code} for {self.client.name}"
 
     def calculate_total(self):
-        """Calculates the total amount based on order items."""
+        if not self.pk:
+            return Decimal(0.0)
+
         total = sum(item.price_at_order * item.quantity for item in self.items.all())
+
+        if self.promo_code:
+            if self.promo_code.discount_type == self.promo_code.DiscountType.FIXED:
+                total -= self.promo_code.value
+            else:
+                total -= total * self.promo_code.value
+
+        return max(total, Decimal(0.0))
+
+    def save_calculate_total(self):
+        total = self.calculate_total()
         self.total_amount = total
         self.save(update_fields=['total_amount'])
-        return total
+
+    def save(self, *args, **kwargs):
+        self.total_amount = self.calculate_total()
+        super().save(*args, **kwargs)
 
 
 class OrderItem(models.Model):
