@@ -33,4 +33,21 @@
     </div>
   </form>
 </div>
+<script>
+document.querySelector('form').addEventListener('submit', function(e) {
+    const serviceSelects = document.querySelectorAll('[name$="-service"]');
+    let hasSelection = false;
+    
+    serviceSelects.forEach(select => {
+        if (select.value !== '') {
+            hasSelection = true;
+        }
+    });
+    
+    if (!hasSelection) {
+        e.preventDefault();
+        alert('Please select at least one service');
+    }
+});
+</script>
 {% endblock %}

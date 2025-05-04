@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, CreateView
@@ -36,7 +36,7 @@ def about(request):
     return render(request, "service/about.html", {"about": About.objects.last()})
 
 
-class CatFactView(TemplateView, LoggingMixin):
+class CatFactView(LoggingMixin, TemplateView):
     template_name = "service/cat_fact.html"
 
     def get_context_data(self, **kwargs):
@@ -72,20 +72,21 @@ class ServiceTypeView(TemplateView):
 
 class ServiceView(FilterView, ListView):
     model = Service
-    template_name = 'service/services.html'
-    context_object_name = 'services'
+    template_name = "service/services.html"
+    context_object_name = "services"
     filterset_class = ServiceFilter
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = self.filterset
+        context["filter"] = self.filterset
         return context
 
 
 class OrderView(LoginRequiredMixin, ListView):
     model = Order
-    template_name = 'orders/orders.html'
-    context_object_name = 'orders'
+    login_url = reverse_lazy("login")
+    template_name = "orders/orders.html"
+    context_object_name = "orders"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,13 +99,13 @@ class OrderView(LoginRequiredMixin, ListView):
         if user.is_superuser:
             return Order.objects.all()
 
-        elif hasattr(user, 'staff'):
-            staff = user.staff
+        elif hasattr(user, "staff_profile"):
+            staff = user.staff_profile
             return Order.objects.filter(
                 Q(created_by=staff) | Q(assigned_staff=staff)
             ).distinct()
 
-        elif hasattr(user, 'client_profile'):
+        elif hasattr(user, "client_profile"):
             client = user.client_profile
             return Order.objects.filter(client=client)
 
@@ -115,21 +116,24 @@ class OrderView(LoginRequiredMixin, ListView):
 class AddOrderView(LoginRequiredMixin, CreateView):
     model = Order
     form_class = OrderForm
-    template_name = 'orders/order_create.html'
+    template_name = "orders/order_create.html"
     success_url = reverse_lazy("orders")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.POST:
-            context['formset'] = OrderItemFormSet(self.request.POST)
+            context["formset"] = OrderItemFormSet(self.request.POST)
         else:
-            context['formset'] = OrderItemFormSet(
+            context["formset"] = OrderItemFormSet(
                 queryset=OrderItem.objects.none(),
                 instance=self.object
             )
         return context
 
     def form_valid(self, form):
+        if not hasattr(self.request.user, "client_profile"):
+            return redirect(reverse_lazy("orders"))
+
         order = form.save(commit=False)
         order.client = Client.objects.get(user=self.request.user)
         order.status = Order.OrderStatus.PENDING
@@ -144,7 +148,7 @@ class AddOrderView(LoginRequiredMixin, CreateView):
         if formset.is_valid():
             instances = formset.save(commit=False)
             for instance in instances:
-                if not instance.pk:  # Only for new items
+                if not instance.pk:
                     instance.price_at_order = instance.service.price
                 instance.save()
             return super().form_valid(form)
