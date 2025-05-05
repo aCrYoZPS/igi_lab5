@@ -3,25 +3,28 @@
 
 {% block content %}
     <h2>Your Orders, {{name}}</h2>
-    <ul>
-        {% for order in orders %}
-            <div>
-                {{ order.order_code }} - {{ order.get_status_display }} <br>
-                (Total: ${{ order.total_amount }})
-                <hr>
-                {% if user.is_authenticated and user == order.client.user%}
-                    <!--<button onclick="window.location.href='{% url 'edit_review' review.pk %}'"-->
-                    <!--        class="button">-->
-                    <!--        Edit Review-->
-                    <!--</button>-->
-                    <button onclick="window.location.href='{% url 'order_delete' order.pk %}'"
-                            class="button">
-                            Delete Review
-                    </button>
-                {% endif %}
-            </div>
-        {% empty %}
-            <p>No orders found.</p>
-        {% endfor %}
-    </ul>
+    {% for order in orders %}
+        <div>
+            {{ order.order_code }} - {{ order.get_status_display }} <br>
+            (Total: ${{ order.total_amount }})
+            {% if user.is_authenticated and user == order.client.user%}
+                <button onclick="window.location.href='{% url 'order_edit' order.pk %}'"
+                        class="button">
+                    Edit Order
+                </button>
+                <button onclick="window.location.href='{% url 'order_delete' order.pk %}'"
+                        class="button">
+                        Delete Order
+                </button>
+            {% endif %}
+            <hr>
+        </div>
+    {% empty %}
+        <p>No orders found.</p>
+    {% endfor %}
+    <button onclick="window.location.href='{% url 'order_create' %}'"
+            class="button">
+            Order
+    </button>
+
 {% endblock %}

@@ -45,7 +45,7 @@ class Client(models.Model):
                                 null=True, blank=True)
     name = models.CharField(max_length=200, help_text="Customer name or Company name")
     contact_person = models.CharField(max_length=150, blank=True, null=True, help_text="Contact person if company")
-    contact_number = models.CharField(max_length=20)
+    contact_number = models.CharField(max_length=20, validators=[phone_number_validator])
     email = models.EmailField(unique=True, blank=True, null=True)
     client_type = models.CharField(max_length=10, choices=ClientType.choices, default=ClientType.PRIVATE)
     address = models.TextField(blank=True, null=True, help_text="Primary address (optional)")
@@ -60,7 +60,7 @@ class Staff(models.Model):
     """Represents a staff member."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 related_name='staff_profile', help_text="Link to Django User for login")
-    contact_number = models.CharField(max_length=20, blank=True, null=True)
+    contact_number = models.CharField(max_length=20, validators=[phone_number_validator])
     hire_date = models.DateField()
     role = models.CharField(max_length=50, blank=True, null=True, help_text="e.g., Cleaner, Manager, Receptionist")
     is_active = models.BooleanField(default=True)
@@ -154,7 +154,7 @@ class Order(models.Model):
             if self.promo_code.discount_type == self.promo_code.DiscountType.FIXED:
                 total -= self.promo_code.value
             else:
-                total -= total * self.promo_code.value
+                total -= total * self.promo_code.value / 100
 
         return max(total, Decimal(0.0))
 
