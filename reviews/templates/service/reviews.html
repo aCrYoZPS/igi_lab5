@@ -3,22 +3,6 @@
 
 
 {% block content %}
-    <style>
-        .button {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white !important;
-            text-decoration: none;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-    </style>
     <h2>Reviews:</h2>
     {% for review in reviews %}
         <div class="review">
@@ -26,15 +10,19 @@
             <h4>{{review.author}} {{review.publication_date|date:"d/m/Y"}}</h4>
             <p>{{review.content}}</p>
             {% if user.is_authenticated and user == review.author %}
-                <a href="{% url 'edit_review' review.pk %}" class="button">
-                    Edit Review
-                </a>
+                <button onclick="window.location.href='{% url 'edit_review' review.pk %}'"
+                        class="button">
+                        Edit Review
+                </button>
+                <button onclick="window.location.href='{% url 'delete_review' review.pk %}'"
+                        class="button">
+                        Delete Review
+                </button>
             {% endif %}
             <hr>
         </div>
     {% endfor %}
-    <button onclick="window.location.href='{% url 'add_review' %}'"
-            class="button">
+    <button onclick="window.location.href='{% url 'add_review' %}'">
         Leave a review
     </button>
 {% endblock %}

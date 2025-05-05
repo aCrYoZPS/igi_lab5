@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView
 from django.db.models import Q
 from blog.models import Article
 from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client
@@ -157,3 +157,12 @@ class AddOrderView(LoginRequiredMixin, CreateView):
             return self.render_to_response(
                 self.get_context_data(form=form, formset=formset)
             )
+
+
+class DeleteOrderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Order
+    template_name = "orders/confirm_order_deletion.html"
+    success_url = reverse_lazy("orders")
+
+    def test_func(self):
+        return self.get_object().client.user == self.request.user

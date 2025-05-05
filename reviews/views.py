@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .models import Review
@@ -30,6 +30,15 @@ class UpdateReviewView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy("reviews")
     form_class = ReviewForm
     model = Review
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
+
+
+class DeleteReviewView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Review
+    template_name = "service/confirm_review_deletion.html"
+    success_url = reverse_lazy("reviews")
 
     def test_func(self):
         return self.get_object().author == self.request.user

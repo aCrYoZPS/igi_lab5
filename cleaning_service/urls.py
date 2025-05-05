@@ -32,6 +32,7 @@ urlpatterns = [
     path("services/", views.ServiceView.as_view(), name="services"),
     path("orders/", views.OrderView.as_view(), name="orders"),
     path("orders/create/", views.AddOrderView.as_view(), name="order_create"),
+    path("orders/delete/<int:order_id>/", views.DeleteOrderView.as_view(), name="order_delete"),
     path("", include("users.urls")),
     path("", include("blog.urls")),
     path("", include("reviews.urls")),

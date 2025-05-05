@@ -1,16 +1,27 @@
 {% extends "base.html" %}
-{% block title %}Privacy policy{% endblock %}
+{% block title %}Orders{% endblock %}
 
 {% block content %}
     <h2>Your Orders, {{name}}</h2>
     <ul>
         {% for order in orders %}
-            <li>
-                {{ order.order_code }} - {{ order.get_status_display }}
+            <div>
+                {{ order.order_code }} - {{ order.get_status_display }} <br>
                 (Total: ${{ order.total_amount }})
-            </li>
+                <hr>
+                {% if user.is_authenticated and user == order.client.user%}
+                    <!--<button onclick="window.location.href='{% url 'edit_review' review.pk %}'"-->
+                    <!--        class="button">-->
+                    <!--        Edit Review-->
+                    <!--</button>-->
+                    <button onclick="window.location.href='{% url 'order_delete' order.pk %}'"
+                            class="button">
+                            Delete Review
+                    </button>
+                {% endif %}
+            </div>
         {% empty %}
-            <li>No orders found.</li>
+            <p>No orders found.</p>
         {% endfor %}
     </ul>
 {% endblock %}
