@@ -61,7 +61,7 @@ class Staff(models.Model):
     """Represents a staff member."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 related_name='staff_profile', help_text="Link to Django User for login")
-    contact_number = models.CharField(max_length=20, validators=[phone_number_validator])
+    contact_number = models.CharField(max_length=20, validators=[phone_number_validator], default="")
     hire_date = models.DateField()
     role = models.CharField(max_length=50, blank=True, null=True, help_text="e.g., Cleaner, Manager, Receptionist")
     is_active = models.BooleanField(default=True)
