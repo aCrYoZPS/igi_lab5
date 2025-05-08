@@ -1,18 +1,16 @@
 {% extends "base.html" %}
+{% block title %}{% if object %}Edit{% else %}Create{% endif %} Order{% endblock %}
 
 {% block content %}
 <div>
-  <h2>Create New Order</h2>
+  <h2>{% if object %}Edit Order #{{ object.id }}{% else %}Create New Order{% endif %}</h2>
   <form method="post">
     {% csrf_token %}
     
-    <div>
-      <div>
-        {{ form.as_p }}
-      </div>
-    </div>
+  <div>
+    {{ form.as_p }}
+  </div>
 
-    <div>
       <div>
         <h5>Services</h5>
         {{ formset.management_form }}
@@ -24,11 +22,10 @@
           </div>
         {% endfor %}
       </div>
-    </div>
 
     <div>
-      <button type="submit">
-        Submit Order
+      <button type="submit" class="button">
+        {% if object %}Update{% else %}Create{% endif %} Order
       </button>
     </div>
   </form>

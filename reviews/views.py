@@ -13,6 +13,7 @@ class ReviewView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["reviews"] = Review.objects.order_by("publication_date")
         context["tz_info"] = get_tz(self.request.user)
+        context["reviews"] = Review.objects.order_by("publication_date").reverse()
         return context
 
 
