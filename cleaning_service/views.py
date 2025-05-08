@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import TemplateView, ListView, CreateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 from django.db.models import Q
 from blog.models import Article
 from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client
@@ -180,10 +180,58 @@ class AddOrderView(LoginRequiredMixin, CreateView):
             )
 
 
+class UpdateOrderView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Order
+    form_class = OrderForm
+    template_name = "orders/order_create.html"
+    success_url = reverse_lazy("orders")
+    pk_url_kwarg = "order_id"
+
+    def test_func(self):
+        return self.get_object().client.user == self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["formset"] = OrderItemFormSet(
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context["formset"] = OrderItemFormSet(
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+
+        order.save()
+
+        formset = OrderItemFormSet(
+            self.request.POST,
+            instance=order
+        )
+
+        if formset.is_valid():
+            instances = formset.save(commit=False)
+            for instance in instances:
+                if not instance.pk:
+                    instance.price_at_order = instance.service.price
+                instance.save()
+            formset.save_m2m()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(
+                self.get_context_data(form=form, formset=formset)
+            )
+
+
 class DeleteOrderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Order
     template_name = "orders/confirm_order_deletion.html"
     success_url = reverse_lazy("orders")
+    pk_url_kwarg = "order_id"
 
     def test_func(self):
         return self.get_object().client.user == self.request.user

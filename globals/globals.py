@@ -1,1 +1,1 @@
-LOG_PATH = "C:\\Users\\aCrYoZ\\igi\\lab5\\service_log.log"
+LOG_PATH = "service_log.log"
