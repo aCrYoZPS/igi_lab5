@@ -6,7 +6,6 @@ from cleaning_service.models import *
 from blog.models import Article
 from decimal import Decimal
 import uuid
-from datetime import datetime, timedelta
 
 User = get_user_model()
 
@@ -104,8 +103,8 @@ class PromoCodeModelTest(TestCase):
             code="SPRING20",
             discount_type=PromoCode.DiscountType.PERCENTAGE,
             value=20,
-            valid_from=datetime.now(),
-            valid_to=datetime.now() + timedelta(days=7)
+            valid_from=timezone.now(),
+            valid_to=timezone.now() + timedelta(days=7)
         )
         self.assertEqual(promo.used_count, 0)
         self.assertTrue(promo.is_active)
@@ -133,7 +132,7 @@ class OrderModelTest(TestCase):
         order = Order.objects.create(
             client=self.client_user,
             address="Test Address",
-            work_date=datetime.now(),
+            work_date=timezone.now(),
             created_by=self.staff_user
         )
         self.assertEqual(order.status, Order.OrderStatus.PENDING)
@@ -143,7 +142,7 @@ class OrderModelTest(TestCase):
         order = Order.objects.create(
             client=self.client_user,
             address="Test Address",
-            work_date=datetime.now()
+            work_date=timezone.now()
         )
         OrderItem.objects.create(
             order=order,
@@ -159,13 +158,13 @@ class OrderModelTest(TestCase):
             code="FIXED50",
             discount_type=PromoCode.DiscountType.FIXED,
             value=50,
-            valid_from=datetime.now(),
-            valid_to=datetime.now() + timedelta(days=1)
+            valid_from=timezone.now(),
+            valid_to=timezone.now() + timedelta(days=1)
         )
         order = Order.objects.create(
             client=self.client_user,
             address="Test Address",
-            work_date=datetime.now(),
+            work_date=timezone.now(),
             promo_code=promo
         )
         OrderItem.objects.create(
@@ -189,7 +188,7 @@ class OrderItemModelTest(TestCase):
         self.order = Order.objects.create(
             client=self.client,
             address="Test",
-            work_date=datetime.now()
+            work_date=timezone.now()
         )
 
     def test_order_item_creation(self):

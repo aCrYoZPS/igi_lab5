@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from globals.utils import get_tz
 from .models import Review
 from .forms import ReviewForm
 
@@ -11,6 +12,7 @@ class ReviewView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["reviews"] = Review.objects.order_by("publication_date")
+        context["tz_info"] = get_tz(self.request.user)
         return context
 
 

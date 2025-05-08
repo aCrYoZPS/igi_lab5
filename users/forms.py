@@ -7,12 +7,10 @@ User = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
-    # User fields
-    email = forms.EmailField(required=True, help_text='Required. Used for password reset.')
+    email = forms.EmailField(required=True, help_text="Required. Used for password reset.")
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
 
-    # Client fields
     name = forms.CharField(
         max_length=200,
         required=True,
@@ -27,32 +25,38 @@ class CustomUserCreationForm(UserCreationForm):
         choices=Client.ClientType.choices,
         initial=Client.ClientType.PRIVATE
     )
+    timezone = forms.CharField(
+        max_length=30,
+        required=True,
+        help_text="Timezone"
+    )
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ("username", "email", "first_name", "last_name")
 
     def clean_email(self):
-        email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("An account with this email address already exists.")
         return email
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data["email"]
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
 
         if commit:
             user.save()
 
         Client.objects.create(
             user=user,
-            name=self.cleaned_data['name'],
-            contact_number=self.cleaned_data['contact_number'],
-            client_type=self.cleaned_data['client_type'],
-            email=user.email
+            name=self.cleaned_data["name"],
+            contact_number=self.cleaned_data["contact_number"],
+            client_type=self.cleaned_data["client_type"],
+            email=user.email,
+            timezone=self.cleaned_data["timezone"]
         )
 
         return user

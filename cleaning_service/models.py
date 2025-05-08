@@ -2,8 +2,8 @@ from django.db import models
 from decimal import Decimal
 from django.conf import settings
 from django.core.validators import MinValueValidator, RegexValidator
+from django.utils import timezone
 import uuid
-from datetime import datetime
 
 phone_number_validator = RegexValidator(r"^\+375(:?44|29|33)\d{7}$")
 
@@ -51,6 +51,7 @@ class Client(models.Model):
     address = models.TextField(blank=True, null=True, help_text="Primary address (optional)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    timezone = models.CharField(max_length=30, default="UTC")
 
     def __str__(self):
         return self.name
@@ -69,6 +70,7 @@ class Staff(models.Model):
         through='StaffSpecialization',
         related_name='specialized_staff'
     )
+    timezone = models.CharField(max_length=30, default="UTC")
 
     def __str__(self):
         return self.user.get_full_name() or self.user.username
@@ -192,7 +194,7 @@ class FAQ(models.Model):
     "Represents FAQ entry"
     question = models.CharField(max_length=256)
     answer = models.CharField(max_length=256)
-    answer_date = models.DateTimeField(default=datetime.now())
+    answer_date = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
         return f"Q: {self.question}\nA: {self.answer}"

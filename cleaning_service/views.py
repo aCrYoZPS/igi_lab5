@@ -7,6 +7,7 @@ from blog.models import Article
 from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client
 from .filters import ServiceFilter
 from globals.logging import LoggingMixin
+from globals.utils import get_tz
 from django_filters.views import FilterView
 from .forms import OrderItemFormSet, OrderForm
 
@@ -16,24 +17,33 @@ from http import HTTPStatus
 
 
 def index(request):
-    response = json.loads(requests.get("https://api.ipify.org?format=json").content)
-    return render(request, "service/index.html", {"article": Article.objects.last(), "ip": response["ip"]})
+    try:
+        response = requests.get("https://api.ipify.org?format=json")
+        if response.status_code != HTTPStatus.OK:
+            ip = "Unable to connect to ip server :("
+        else:
+            ip = json.loads(response.content)["ip"] + ":>"
+
+    except Exception:
+        ip = "Unable to connect to server :("
+
+    return render(request, "service/index.html", {"article": Article.objects.last(), "ip": ip, "tz_info": get_tz(request.user)})
 
 
 def privacy_policy(request):
-    return render(request, "service/privacy_policy.html", {"policy": PrivacyPolicy.objects.last()})
+    return render(request, "service/privacy_policy.html", {"policy": PrivacyPolicy.objects.last(), "tz_info": get_tz(request.user)})
 
 
 def faq(request):
-    return render(request, "service/faq.html", {"faqs": FAQ.objects.all()})
+    return render(request, "service/faq.html", {"faqs": FAQ.objects.all(), "tz_info": get_tz(request.user)})
 
 
 def vacancies(request):
-    return render(request, "service/vacancies.html", {"vacancies": Vacancy.objects.all()})
+    return render(request, "service/vacancies.html", {"vacancies": Vacancy.objects.all(), "tz_info": get_tz(request.user)})
 
 
 def about(request):
-    return render(request, "service/about.html", {"about": About.objects.last()})
+    return render(request, "service/about.html", {"about": About.objects.last(), "tz_info": get_tz(request.user)})
 
 
 class CatFactView(LoggingMixin, TemplateView):
@@ -41,13 +51,19 @@ class CatFactView(LoggingMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        response = requests.get("https://catfact.ninja/fact")
-        if response.status_code != HTTPStatus.OK:
-            self.error("Unable to get cat fact")
+        context["tz_info"] = get_tz(self.request.user)
+
+        try:
+            response = requests.get("https://catfact.ninja/fact")
+            if response.status_code != HTTPStatus.OK:
+                self.error("Unable to get cat fact")
+                context["cat_fact"] = None
+            else:
+                response_body = json.loads(response.content)
+                context["cat_fact"] = response_body["fact"]
+        except Exception:
             context["cat_fact"] = None
-        else:
-            response_body = json.loads(response.content)
-            context["cat_fact"] = response_body["fact"]
+
         return context
 
 
@@ -56,6 +72,7 @@ class PromoCodeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tz_info"] = get_tz(self.request.user)
         context["valid_codes"] = PromoCode.objects.filter(is_active=True)
         context["invalid_codes"] = PromoCode.objects.filter(is_active=False)
         return context
@@ -66,6 +83,7 @@ class ServiceTypeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tz_info"] = get_tz(self.request.user)
         context["service_types"] = ServiceType.objects.filter()
         return context
 
@@ -79,6 +97,7 @@ class ServiceView(FilterView, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter"] = self.filterset
+        context["tz_info"] = get_tz(self.request.user)
         return context
 
 
@@ -91,6 +110,7 @@ class OrderView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["name"] = self.request.user.username
+        context["tz_info"] = get_tz(self.request.user)
         return context
 
     def get_queryset(self):
@@ -121,6 +141,7 @@ class AddOrderView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tz_info"] = get_tz(self.request.user)
         if self.request.POST:
             context["formset"] = OrderItemFormSet(self.request.POST)
         else:
