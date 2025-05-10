@@ -61,7 +61,7 @@ class Staff(models.Model):
     """Represents a staff member."""
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                                 related_name='staff_profile', help_text="Link to Django User for login")
-    contact_number = models.CharField(max_length=20, validators=[phone_number_validator])
+    contact_number = models.CharField(max_length=20, validators=[phone_number_validator], default="")
     hire_date = models.DateField()
     role = models.CharField(max_length=50, blank=True, null=True, help_text="e.g., Cleaner, Manager, Receptionist")
     is_active = models.BooleanField(default=True)
@@ -128,7 +128,7 @@ class Order(models.Model):
 
     order_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,
                                   help_text="Unique identifier for the order")
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='orders')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
     address = models.TextField(help_text="Address where cleaning work will be performed")
     work_date = models.DateTimeField(help_text="Scheduled date and time for the cleaning work")
     status = models.CharField(max_length=20, choices=OrderStatus.choices, default=OrderStatus.PENDING)
