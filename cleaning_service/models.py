@@ -128,7 +128,7 @@ class Order(models.Model):
 
     order_code = models.UUIDField(default=uuid.uuid4, editable=False, unique=True,
                                   help_text="Unique identifier for the order")
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='orders')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
     address = models.TextField(help_text="Address where cleaning work will be performed")
     work_date = models.DateTimeField(help_text="Scheduled date and time for the cleaning work")
     status = models.CharField(max_length=20, choices=OrderStatus.choices, default=OrderStatus.PENDING)

@@ -2,6 +2,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+  {% load socialaccount %}
   <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
@@ -11,5 +12,5 @@
 
   <p>Need an account? <a href="{% url 'signup' %}">Sign Up</a></p>
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-  <p><a href="{% provider_login_url 'google' %}">Sign in with Google</a></p>
+  <p><a href="{% url 'google_login' %}">Sign in with Google</a></p>
 {% endblock %}

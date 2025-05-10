@@ -35,7 +35,7 @@ urlpatterns = [
     path("orders/edit/<int:order_id>/", views.UpdateOrderView.as_view(), name="order_edit"),
     path("orders/delete/<int:order_id>/", views.DeleteOrderView.as_view(), name="order_delete"),
     path("", include("users.urls")),
-    path("auth/", include("allauth.urls")),
+    path("oauth/", include("allauth.urls")),
     path("", include("blog.urls")),
     path("", include("reviews.urls")),
 ]
