@@ -16,6 +16,15 @@
                         class="button">
                         Delete Order
                 </button>
+            {% elif user.is_authenticated and user.is_superuser %}
+                <button onclick="window.location.href='{% url 'order_edit' order.pk %}'"
+                        class="button">
+                    Edit Order
+                </button>
+                <button onclick="window.location.href='{% url 'order_delete' order.pk %}'"
+                        class="button">
+                        Delete Order
+                </button>
             {% endif %}
             <hr>
         </div>

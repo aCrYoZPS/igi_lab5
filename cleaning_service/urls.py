@@ -38,4 +38,5 @@ urlpatterns = [
     path("oauth/", include("allauth.urls")),
     path("", include("blog.urls")),
     path("", include("reviews.urls")),
+    path("", include("client_profile.urls")),
 ]

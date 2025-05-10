@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'cleaning_service',
     'users',
     'blog',
-    'reviews'
+    'reviews',
+    'client_profile'
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,8 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 2
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email', 'username', 'password1', 'password2']
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

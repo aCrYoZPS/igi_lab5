@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h1>Your Profile</h1>
+    
+    <div >
+        <div >
+            <h5 >{{ client.name }}</h5>
+            <p>
+                <strong>Type:</strong> {{ client.get_client_type_display }}<br>
+                {% if client.client_type == 'COMPANY' %}
+                    <strong>Contact Person:</strong> {{ client.contact_person }}<br>
+                {% endif %}
+                <strong>Phone:</strong> {{ client.contact_number }}<br>
+                <strong>Email:</strong> {{ client.email }}<br>
+                <strong>Address:</strong> {{ client.address|default:"-" }}<br>
+                <strong>Timezone:</strong> {{ client.timezone }}
+            </p>
+            <div>
+                <a href="{% url 'client_edit' %}">Edit Profile</a>
+                <a href="{% url 'client_delete' %}">Delete Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

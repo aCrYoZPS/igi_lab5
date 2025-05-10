@@ -188,7 +188,7 @@ class UpdateOrderView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     pk_url_kwarg = "order_id"
 
     def test_func(self):
-        return self.get_object().client.user == self.request.user
+        return self.get_object().client.user == self.request.user or self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -234,4 +234,4 @@ class DeleteOrderView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     pk_url_kwarg = "order_id"
 
     def test_func(self):
-        return self.get_object().client.user == self.request.user
+        return self.get_object().client.user == self.request.user or self.request.user.is_superuser
