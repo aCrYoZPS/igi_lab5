@@ -1,73 +1,9 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-<div>
-    <div>
-        <div>
-            <h2>Edit Profile</h2>
-        </div>
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                
-                <div>
-                    <label class="form-label">Client Type</label>
-                    {{ form.client_type }}
-                </div>
-
-                <div>
-                    <label class="form-label">Full Name / Company Name</label>
-                    {{ form.name }}
-                </div>
-
-                <div style="display: {% if form.instance.client_type == 'COMPANY' %}block{% else %}none{% endif %};">
-                    <label>Contact Person</label>
-                    {{ form.contact_person }}
-                    <div>Required for company accounts</div>
-                </div>
-
-                <div>
-                    <div>
-                        <label class="form-label">Contact Number</label>
-                        {{ form.contact_number }}
-                    </div>
-                </div>
-
-                <div>
-                    <label class="form-label">Email</label>
-                    {{ form.email }}
-                </div>
-
-                <div>
-                    <label class="form-label">Address</label>
-                    {{ form.address }}
-                </div>
-
-                <div>
-                    <label class="form-label">Timezone</label>
-                    {{ form.timezone }}
-                    <div>Your local timezone for scheduling</div>
-                </div>
-
-                <div>
-                    <button type="submit">
-                        Save Changes
-                    </button>
-
-                    <form action="{% url 'client_profile' %}" method="post">
-                      {% csrf_token %}
-                      <button type="submit">Cancel</button>
-                    </form>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-    document.getElementById('id_client_type').addEventListener('change', function() {
-        document.getElementById('contact-person-field').style.display = 
-            this.value === 'COMPANY' ? 'block' : 'none';
-    });
-</script>
+<h1>{% if object %}Edit Profile{% else %}Create Client Profile{% endif %}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
 {% endblock %}

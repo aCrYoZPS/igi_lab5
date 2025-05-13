@@ -38,17 +38,25 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("An account with this email address already exists.")
+            raise forms.ValidationError("An account with this email already exists.")
         return email
 
     def save(self, commit=True):
-        client = Client.objects.create(
-            name=self.cleaned_data["name"],
-            contact_number=self.cleaned_data["contact_number"],
-            client_type=self.cleaned_data["client_type"],
-            email=self.cleaned_data["email"],
-            timezone=self.cleaned_data["timezone"]
-        )
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+
+        if commit:
+            user.save()
+
+        client = Client.objects.get(user=user)
+        client.name = self.cleaned_data["name"]
+        client.contact_number = self.cleaned_data["contact_number"]
+        client.client_type = self.cleaned_data["client_type"]
+        client.email = self.cleaned_data["email"]
+        client.timezone = self.cleaned_data["timezone"]
+        client.save()
 
         client.save()
 

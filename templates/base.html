@@ -24,16 +24,16 @@
         </style>
         {% block content %}{% endblock content %}
         {% if tz_info %}<p>Specified timezone: {{tz_info}}</p> {% endif %}
-        {% if user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Logout</button>
-        </form>
+        {%if user.is_authenticated%}
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+            </form>
         {% else %}
-        <form action="{% url 'login' %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Login</button>
-        </form>
+            <form action="{% url 'login' %}" method="get">
+              {% csrf_token %}
+              <button type="submit">Log In</button>
+            </form>
         {% endif %}
     </body>
 </html>
