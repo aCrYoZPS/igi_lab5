@@ -18,8 +18,14 @@
                 <strong>Timezone:</strong> {{ client.timezone }}
             </p>
             <div>
-                <a href="{% url 'client_edit' %}">Edit Profile</a>
-                <a href="{% url 'client_delete' %}">Delete Profile</a>
+                <form action="{% url 'client_edit' %}" method="get">
+                  {% csrf_token %}
+                  <button type="submit">Edit Profile</button>
+                </form>
+                <form action="{% url 'client_delete' %}" method="get">
+                  {% csrf_token %}
+                  <button type="submit">Delete Profile</button>
+                </form>
             </div>
         </div>
     </div>

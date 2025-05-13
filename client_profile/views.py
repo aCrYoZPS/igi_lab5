@@ -38,7 +38,7 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
 class ClientDeleteView(LoginRequiredMixin, DeleteView):
     model = Client
     template_name = 'clients/client_confirm_delete.html'
-    success_url = reverse_lazy('home')  # Redirect to home after deletion
+    success_url = reverse_lazy('home')
 
     def get_object(self):
         return get_object_or_404(Client, user=self.request.user)

@@ -42,21 +42,20 @@ class CustomUserCreationForm(UserCreationForm):
         return email
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data["email"]
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-
-        if commit:
-            user.save()
-
-        Client.objects.create(
-            user=user,
+        client = Client.objects.create(
             name=self.cleaned_data["name"],
             contact_number=self.cleaned_data["contact_number"],
             client_type=self.cleaned_data["client_type"],
-            email=user.email,
+            email=self.cleaned_data["email"],
             timezone=self.cleaned_data["timezone"]
         )
+
+        client.save()
+
+        user = client.user
+        user.email = client.email
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        user.save()
 
         return user

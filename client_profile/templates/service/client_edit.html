@@ -1,61 +1,63 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
+<div>
+    <div>
+        <div>
             <h2>Edit Profile</h2>
         </div>
-        <div class="card-body">
+        <div>
             <form method="post">
                 {% csrf_token %}
                 
-                <div class="mb-3">
+                <div>
                     <label class="form-label">Client Type</label>
                     {{ form.client_type }}
                 </div>
 
-                <div class="mb-3">
+                <div>
                     <label class="form-label">Full Name / Company Name</label>
                     {{ form.name }}
                 </div>
 
-                <div class="mb-3" id="contact-person-field" 
-                     style="display: {% if form.instance.client_type == 'COMPANY' %}block{% else %}none{% endif %};">
-                    <label class="form-label">Contact Person</label>
+                <div style="display: {% if form.instance.client_type == 'COMPANY' %}block{% else %}none{% endif %};">
+                    <label>Contact Person</label>
                     {{ form.contact_person }}
-                    <div class="form-text">Required for company accounts</div>
+                    <div>Required for company accounts</div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+                <div>
+                    <div>
                         <label class="form-label">Contact Number</label>
                         {{ form.contact_number }}
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Email</label>
-                        {{ form.email }}
-                    </div>
                 </div>
 
-                <div class="mb-3">
+                <div>
+                    <label class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+
+                <div>
                     <label class="form-label">Address</label>
                     {{ form.address }}
                 </div>
 
-                <div class="mb-3">
+                <div>
                     <label class="form-label">Timezone</label>
                     {{ form.timezone }}
-                    <div class="form-text">Your local timezone for scheduling</div>
+                    <div>Your local timezone for scheduling</div>
                 </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save"></i> Save Changes
+                <div>
+                    <button type="submit">
+                        Save Changes
                     </button>
-                    <a href="{% url 'client_profile' %}" class="btn btn-secondary">
-                        <i class="bi bi-x-circle"></i> Cancel
-                    </a>
+
+                    <form action="{% url 'client_profile' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Cancel</button>
+                    </form>
                 </div>
             </form>
         </div>
@@ -63,7 +65,6 @@
 </div>
 
 <script>
-    // Show/hide contact person field based on client type
     document.getElementById('id_client_type').addEventListener('change', function() {
         document.getElementById('contact-person-field').style.display = 
             this.value === 'COMPANY' ? 'block' : 'none';

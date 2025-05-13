@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="mb-4">User Review Statistics</h2>
+    <div class="chart-container">
+      <img 
+        src="data:image/png;base64,{{ chart_image }}" 
+        alt="Review Statistics Chart"
+        class="img-fluid"
+      >
+    </div>
+  </div>
+{% endblock %}

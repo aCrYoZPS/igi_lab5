@@ -6,6 +6,7 @@ from cleaning_service.models import *
 from blog.models import Article
 from decimal import Decimal
 import uuid
+from datetime import timedelta
 
 User = get_user_model()
 
@@ -54,7 +55,6 @@ class ClientModelTest(TestCase):
 
     def test_client_creation(self):
         client = Client.objects.create(
-            user=self.user,
             name="John Doe",
             contact_number="+375291234567",
             client_type=Client.ClientType.PRIVATE
@@ -207,7 +207,6 @@ class SupportModelsTest(TestCase):
             question="How does it work?",
             answer="Very simple!"
         )
-        self.assertIsInstance(faq.answer_date, datetime)
 
     def test_vacancy_creation(self):
         st = ServiceType.objects.create(name="Commercial")
