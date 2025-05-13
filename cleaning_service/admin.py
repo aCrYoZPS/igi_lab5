@@ -31,7 +31,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'client_type', 'contact_number', 'email', 'user')
+    list_display = ('name', 'client_type', 'contact_number', 'email', 'user', 'user_id')
     list_filter = ('client_type',)
     search_fields = ('name', 'contact_person', 'contact_number', 'email')
     raw_id_fields = ('user',)

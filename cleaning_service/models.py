@@ -7,6 +7,7 @@ import uuid
 
 phone_number_validator = RegexValidator(r"^\+375(:?44|29|33)\d{7}$")
 
+
 # --- Service Related Models ---
 
 
@@ -37,12 +38,13 @@ class Service(models.Model):
 
 class Client(models.Model):
     """Represents a client."""
+
     class ClientType(models.TextChoices):
         PRIVATE = 'PRIVATE', 'Private Individual'
         COMPANY = 'COMPANY', 'Company'
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client_profile',
-                                null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                                null=True, blank=True, related_name='client_profile', unique=False)
     name = models.CharField(max_length=200, help_text="Customer name or Company name")
     contact_person = models.CharField(max_length=150, blank=True, null=True, help_text="Contact person if company")
     contact_number = models.CharField(max_length=20, validators=[phone_number_validator])
@@ -92,6 +94,7 @@ class StaffSpecialization(models.Model):
 # --- Order Related Models ---
 class PromoCode(models.Model):
     """Represents promo codes or coupons."""
+
     class DiscountType(models.TextChoices):
         PERCENTAGE = 'PERCENT', 'Percentage'
         FIXED = 'FIXED', 'Fixed Amount'
@@ -115,6 +118,7 @@ class PromoCode(models.Model):
 
 class Order(models.Model):
     """Represents a customer's order for one or more services."""
+
     class OrderStatus(models.TextChoices):
         PENDING = 'PENDING', 'Pending Confirmation'
         SCHEDULED = 'SCHEDULED', 'Scheduled'

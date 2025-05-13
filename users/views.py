@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from . import settings
+from cleaning_service import settings
 from .forms import CustomUserCreationForm
 
 
@@ -9,7 +9,7 @@ def signup(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
+            login(request, user, settings.AUTHENTICATION_BACKENDS[0])
             return redirect(settings.LOGIN_REDIRECT_URL)
     else:
         form = CustomUserCreationForm()

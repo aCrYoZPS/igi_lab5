@@ -1,27 +1,16 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
+<h1>Your Client Profile</h1>
 <div>
-    <h1>Your Profile</h1>
-    
-    <div >
-        <div >
-            <h5 >{{ client.name }}</h5>
-            <p>
-                <strong>Type:</strong> {{ client.get_client_type_display }}<br>
-                {% if client.client_type == 'COMPANY' %}
-                    <strong>Contact Person:</strong> {{ client.contact_person }}<br>
-                {% endif %}
-                <strong>Phone:</strong> {{ client.contact_number }}<br>
-                <strong>Email:</strong> {{ client.email }}<br>
-                <strong>Address:</strong> {{ client.address|default:"-" }}<br>
-                <strong>Timezone:</strong> {{ client.timezone }}
-            </p>
-            <div>
-                <a href="{% url 'client_edit' %}">Edit Profile</a>
-                <a href="{% url 'client_delete' %}">Delete Profile</a>
-            </div>
-        </div>
-    </div>
+  <p><strong>Name:</strong> {{ client.name }}</p>
+  <p><strong>Type:</strong> {{ client.get_client_type_display }}</p>
+  {% if client.client_type == 'COMPANY' %}
+    <p><strong>Contact Person:</strong> {{ client.contact_person }}</p>
+  {% endif %}
+  <p><strong>Contact Number:</strong> {{ client.contact_number }}</p>
+  <p><strong>Email:</strong> {{ client.email }}</p>
+  <p><strong>Address:</strong> {{ client.address|linebreaks }}</p>
 </div>
+<a href="{% url 'update_client' client.pk %}">Edit Profile</a>
+<a href="{% url 'delete_client' client.pk %}">Delete Profile</a>
 {% endblock %}
