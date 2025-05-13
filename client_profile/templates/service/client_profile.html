@@ -2,6 +2,7 @@
 {% block content %}
 <h1>Your Client Profile</h1>
 <div>
+    <h1>Your Profile</h1>
   <p><strong>Name:</strong> {{ client.name }}</p>
   <p><strong>Type:</strong> {{ client.get_client_type_display }}</p>
   {% if client.client_type == 'COMPANY' %}
@@ -10,7 +11,15 @@
   <p><strong>Contact Number:</strong> {{ client.contact_number }}</p>
   <p><strong>Email:</strong> {{ client.email }}</p>
   <p><strong>Address:</strong> {{ client.address|linebreaks }}</p>
+            <div>
+                <form action="{% url 'client_edit' %}" method="get">
+                  {% csrf_token %}
+                  <button type="submit">Edit Profile</button>
+                </form>
+                <form action="{% url 'client_delete' %}" method="get">
+                  {% csrf_token %}
+                  <button type="submit">Delete Profile</button>
+                </form>
+            </div>
 </div>
-<a href="{% url 'update_client' client.pk %}">Edit Profile</a>
-<a href="{% url 'delete_client' client.pk %}">Delete Profile</a>
 {% endblock %}

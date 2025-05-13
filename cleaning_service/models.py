@@ -54,6 +54,7 @@ class Client(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     timezone = models.CharField(max_length=30, default="UTC")
+    logged_in = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
