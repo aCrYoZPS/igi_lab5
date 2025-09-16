@@ -1,39 +1,52 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Cleaning Service</title>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="aCrYoZ" />
+  <meta name="keywords" content="cleaning" />
+  <title>Cleaning Service</title>
+  <link rel="shortcut icon" href="{% static 'images/cleaning.png' %}" type="image/x-icon" />
+  <link rel="icon" href="{% static 'images/cleaning.png' %}" type="image/x-icon" />
+</head>
+<body>
+  <header>
+    <nav aria-label="Primary site navigation">
+      <ul>
+        <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="{% url 'privacy_policy' %}" {% if request.resolver_match.url_name == 'privacy_policy' %}aria-current="page"{% endif %}>Privacy Policy</a></li>
+        <li><a href="{% url 'faq' %}" {% if request.resolver_match.url_name == 'faq' %}aria-current="page"{% endif %}>FAQ</a></li>
+        <li><a href="{% url 'vacancies' %}" {% if request.resolver_match.url_name == 'vacancies' %}aria-current="page"{% endif %}>Jobs</a></li>
+        <li><a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a></li>
+        <li><a href="{% url 'cat_fact' %}" {% if request.resolver_match.url_name == 'cat_fact' %}aria-current="page"{% endif %}>Cat Fact</a></li>
+        <li><a href="{% url 'promo_codes' %}" {% if request.resolver_match.url_name == 'promo_codes' %}aria-current="page"{% endif %}>Promo Codes</a></li>
+        <li><a href="{% url 'service_types' %}" {% if request.resolver_match.url_name == 'service_types' %}aria-current="page"{% endif %}>Service Types</a></li>
+        <li><a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a></li>
+        <li><a href="{% url 'orders' %}" {% if request.resolver_match.url_name == 'orders' or request.resolver_match.namespace == 'orders' %}aria-current="page"{% endif %}>Orders</a></li>
+        <li><a href="{% url 'reviews' %}" {% if request.resolver_match.url_name == 'reviews' %}aria-current="page"{% endif %}>Reviews</a></li>
+        <li><a href="{% url 'client_profile' %}" {% if request.resolver_match.url_name == 'client_profile' %}aria-current="page"{% endif %}>Clients</a></li>
+        <li><a href="{% url 'stats' %}" {% if request.resolver_match.url_name == 'stats' %}aria-current="page"{% endif %}>Stats</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <body>
-        <style>
-            button {
-                display: inline-block;
-                padding: 8px 16px;
-                background-color: #007bff;
-                color: white !important;
-                text-decoration: none;
-                border-radius: 4px;
-                border: none;
-                cursor: pointer;
-                margin: 8px 0px;
-            }
+  {% block content %}{% endblock content %}
 
-            button:hover {
-                background-color: #0056b3;
-            }
-        </style>
-        {% block content %}{% endblock content %}
-        {% if tz_info %}<p>Specified timezone: {{tz_info}}</p> {% endif %}
-        {%if user.is_authenticated%}
-            <form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
-            </form>
-        {% else %}
-            <form action="{% url 'login' %}" method="get">
-              {% csrf_token %}
-              <button type="submit">Log In</button>
-            </form>
-        {% endif %}
-    </body>
+  {% if tz_info %}
+    <p>Specified timezone: {{ tz_info }}</p>
+  {% endif %}
+
+  <footer>
+    {% if user.is_authenticated %}
+      <form action="{% url 'logout' %}" method="post" aria-label="Logout form">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    {% else %}
+      <form action="{% url 'login' %}" method="get" aria-label="Login form">
+        <button type="submit">Log In</button>
+      </form>
+    {% endif %}
+  </footer>
+</body>
 </html>

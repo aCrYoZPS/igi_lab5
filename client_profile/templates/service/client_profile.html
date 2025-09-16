@@ -12,11 +12,11 @@
   <p><strong>Email:</strong> {{ client.email }}</p>
   <p><strong>Address:</strong> {{ client.address|linebreaks }}</p>
             <div>
-                <form action="{% url 'client_edit' %}" method="get">
+                <form action="{% url 'update_client' client.id %}" method="get">
                   {% csrf_token %}
                   <button type="submit">Edit Profile</button>
                 </form>
-                <form action="{% url 'client_delete' %}" method="get">
+                <form action="{% url 'delete_client' client.id %}" method="get">
                   {% csrf_token %}
                   <button type="submit">Delete Profile</button>
                 </form>

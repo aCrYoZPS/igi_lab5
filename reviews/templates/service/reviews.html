@@ -1,28 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Reviews{% endblock %}
-
-
 {% block content %}
-    <h2>Reviews:</h2>
-    {% for review in reviews %}
-        <div class="review">
-            <h3>{{review.title}} | {{review.score}}/10</h3>
-            <h4>{{review.author}} {{review.publication_date|date:"d/m/Y"}}</h4>
-            <p>{{review.content}}</p>
-            {% if user.is_authenticated and user == review.author %}
-                <button onclick="window.location.href='{% url 'edit_review' review.pk %}'"
-                        class="button">
-                        Edit Review
-                </button>
-                <button onclick="window.location.href='{% url 'delete_review' review.pk %}'"
-                        class="button">
-                        Delete Review
-                </button>
-            {% endif %}
-            <hr>
-        </div>
-    {% endfor %}
-    <button onclick="window.location.href='{% url 'add_review' %}'">
-        Leave a review
-    </button>
+<main>
+    <section aria-labelledby="reviews-header">
+        <h2 id="reviews-header">Reviews:</h2>
+        <ul>
+        {% for review in reviews %}
+            <li itemscope itemtype="http://schema.org/Review" class="review">
+                <article>
+                    <header>
+                        <h3 itemprop="name">{{ review.title }} | <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                            <span itemprop="ratingValue">{{ review.score }}</span>/10
+                        </span></h3>
+                        <h4>
+                            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                <span itemprop="name">{{ review.author }}</span>
+                            </span> 
+                            <time itemprop="datePublished" datetime="{{ review.publication_date|date:'Y-m-d' }}">
+                                {{ review.publication_date|date:"d/m/Y" }}
+                            </time>
+                        </h4>
+                    </header>
+                    <section itemprop="reviewBody">
+                        <p>{{ review.content }}</p>
+                    </section>
+                    {% if user.is_authenticated and user == review.author %}
+                    <nav aria-label="Review actions">
+                        <a href="{% url 'edit_review' review.pk %}" class="button" role="button">
+                            Edit Review
+                        </a>
+                        <a href="{% url 'delete_review' review.pk %}" class="button" role="button">
+                            Delete Review
+                        </a>
+                    </nav>
+                    {% endif %}
+                </article>
+            </li>
+        {% endfor %}
+        </ul>
+        <a href="{% url 'add_review' %}" class="button" role="button">
+            Leave a review
+        </a>
+    </section>
+</main>
 {% endblock %}

@@ -1,9 +1,69 @@
 {% extends "base.html" %}
 {% block title %}Privacy policy{% endblock %}
-
 {% block content %}
-    <h2>Privacy policy</h2>
-    <p>
-        {{policy.policy_content}}
-    </p>
+    <main>
+        <section aria-labelledby="intro">
+            <h2 id="intro">Introduction</h2>
+            <p>Welcome to Cleaning Company. We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you visit our website or use our services.</p>
+        </section>
+        <section aria-labelledby="information-collection">
+            <h2 id="information-collection">Information We Collect</h2>
+            <p>We collect various types of information to provide and improve our services:</p>
+            <ul>
+                <li><strong>Personal Identification Information:</strong> Name, email address, phone number, etc.</li>
+                <li><strong>Usage Data:</strong> Browsing behavior, IP address, device information, and cookies.</li>
+                <li><strong>Cookies and Tracking Technologies:</strong> To enhance user experience and analyze site traffic.</li>
+            </ul>
+        </section>
+        <section aria-labelledby="use-of-information">
+            <h2 id="use-of-information">How We Use Your Information</h2>
+            <p>Your information is used for the following purposes:</p>
+            <ul>
+                <li>To provide, operate, and maintain our website and services.</li>
+                <li>To personalize and improve your experience.</li>
+                <li>To communicate with you, including marketing and updates.</li>
+                <li>To ensure security and prevent fraud.</li>
+            </ul>
+        </section>
+        <section aria-labelledby="information-sharing">
+            <h2 id="information-sharing">Information Sharing and Disclosure</h2>
+            <p>We do not sell your personal data. We may share information with:</p>
+            <ul>
+                <li>Trusted service providers who assist with operations under confidentiality agreements.</li>
+                <li>Legal authorities when required by law or to protect rights.</li>
+            </ul>
+        </section>
+        <section aria-labelledby="data-security">
+            <h2 id="data-security">Data Security</h2>
+            <p>We adopt appropriate security measures to protect your data from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet is 100% secure.</p>
+        </section>
+        <section aria-labelledby="your-rights">
+            <h2 id="your-rights">Your Rights</h2>
+            <p>You have rights related to your personal data, including:</p>
+            <ul>
+                <li>Accessing the information we hold about you.</li>
+                <li>Requesting correction or deletion of your data.</li>
+                <li>Opting out of marketing communications.</li>
+                <li>Restricting or objecting to certain processing.</li>
+            </ul>
+            <p>To exercise these rights, please contact us at <a href="mailto:privacy@cleaningcompany.com">privacy@cleaningcompany.com</a>.</p>
+        </section>
+        <section aria-labelledby="cookies">
+            <h2 id="cookies">Cookies</h2>
+            <p>Our website uses cookies to enhance your experience. You can control cookie preferences through your browser settings.</p>
+        </section>
+        <section aria-labelledby="changes">
+            <h2 id="changes">Changes to This Privacy Policy</h2>
+            <p>We may update this policy occasionally. Changes will be posted on this page with an updated effective date.</p>
+        </section>
+        <section aria-labelledby="contact">
+            <h2 id="contact">Contact Us</h2>
+            <address>
+                For questions about this Privacy Policy, please contact:<br />
+                Cleaning Company<br />
+                Email: <a href="mailto:privacy@cleaningcompany.com">privacy@cleaningcompany.com</a><br />
+                Phone: +375(33)123-45-67
+            </address>
+        </section>
+    </main>
 {% endblock %}

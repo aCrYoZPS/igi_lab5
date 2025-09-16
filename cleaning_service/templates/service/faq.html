@@ -3,13 +3,10 @@
 
 
 {% block content %}
-    <hr>
     {% for faq in faqs %}
-        <div class="question_answer">
-            <h3> Q: {{faq.question}} </h3>
-            <h3> A: {{faq.answer}} </h3>
-            Answered on {{faq.answer_date|date:"d/m/Y H:i"}} <br>
-            <hr>
-        </div>
+        <details class="question_answer">
+            <summary> Q: {{faq.question}} </summary>
+            <p> A: {{faq.answer}}<br>Answered on {{faq.answer_date|date:"d/m/Y H:i"}}</p>
+        </details>
     {% endfor %}
 {% endblock %}

@@ -1,33 +1,51 @@
 {% extends "base.html" %}
-{% block title %}promocodes{% endblock %}
-
-
+{% block title %}Promocodes{% endblock %}
 {% block content %}
-    <h2>Active promocodes:</h2>
-    {% if valid_codes %}
-        {% for code in valid_codes %}
-            <div class="promocode">
-                <h3>{{code}} </h3>
-                <p>
-                    valid from {{code.valid_from|date:"d/m/Y"}}<br>
-                    valid to {{code.valid_from|date:"d/m/Y"}}<br>
-                </p>
-                <hr>
-            </div>
-        {% endfor %}
-    {% else %}
+<main>
+    <section aria-labelledby="active-promocodes-header">
+        <h2 id="active-promocodes-header">Active Promocodes:</h2>
+        {% if valid_codes %}
+        <ul>
+            {% for code in valid_codes %}
+            <li itemscope itemtype="http://schema.org/Offer" class="promocode">
+                <article>
+                    <h3 itemprop="name">{{ code }}</h3>
+                    <p>
+                        <time itemprop="validFrom" datetime="{{ code.valid_from|date:'Y-m-d' }}">
+                            valid from {{ code.valid_from|date:"d/m/Y" }}
+                        </time><br />
+                        <time itemprop="validThrough" datetime="{{ code.valid_to|date:'Y-m-d' }}">
+                            valid to {{ code.valid_to|date:"d/m/Y" }}
+                        </time><br />
+                    </p>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
         <p>Sorry, no promocodes now :[</p>
-    {% endif %}
+        {% endif %}
+    </section>
+
     {% if invalid_codes %}
-        <h2>Inactive promocodes:</h2>
-        {% for code in invalid_codes %}
-            <div class="promocode">
-                <h3>{{code}} </h3>
-                <p>
-                    expiration date {{code.valid_to|date:"d/m/Y"}}<br>
-                </p>
-                <hr>
-            </div>
-        {% endfor %}
+    <section aria-labelledby="inactive-promocodes-header">
+        <h2 id="inactive-promocodes-header">Inactive Promocodes:</h2>
+        <ul>
+            {% for code in invalid_codes %}
+            <li itemscope itemtype="http://schema.org/Offer" class="promocode">
+                <article>
+                    <h3 itemprop="name">{{ code }}</h3>
+                    <p>
+                        Expiration date: 
+                        <time itemprop="validThrough" datetime="{{ code.valid_to|date:'Y-m-d' }}">
+                            {{ code.valid_to|date:"d/m/Y" }}
+                        </time>
+                    </p>
+                </article>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
     {% endif %}
+</main>
 {% endblock %}
