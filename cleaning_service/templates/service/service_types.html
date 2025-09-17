@@ -1,16 +1,15 @@
 {% extends "base.html" %}
-{% block title %}FAQ{% endblock %}
-
-
+{% block title %}Service types{% endblock %}
 {% block content %}
-    <h2>Service types:</h2>
-    {% for service_type in service_types %}
-        <div class="service_type">
-            <h3>{{service_type.name}}</h3>
-            <p>
-                {{service_type.description}}
-            </p>
-            <hr>
-        </div>
-    {% endfor %}
+    <section aria-label="Service Types">
+        <h2>Service types:</h2>
+        {% for service_type in service_types %}
+            <article class="service_type" aria-labelledby="service-name-{{ forloop.counter }}">
+                <header>
+                    <h3 id="service-name-{{ forloop.counter }}">{{ service_type.name }}</h3>
+                </header>
+                <p>{{ service_type.description }}</p>
+            </article>
+        {% endfor %}
+    </section>
 {% endblock %}

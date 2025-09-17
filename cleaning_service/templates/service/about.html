@@ -1,13 +1,41 @@
 {% extends "base.html" %}
 {% block title %}About{% endblock %}
 {% block content %}
-<section class="question_answer">
+<section>
     {% if about.logo %}
         <figure>
             <img src="{{ about.logo }}" alt="logo" width="600" />
             <figcaption>Company logo</figcaption>
         </figure>
     {% endif %}
+
+    <header>
+        <p>г. Москва</p>
+        <p>17 января 2017</p>
+        <h1>Единый Реестр Турагентов</h1>
+        <h2>Свидетельство</h2>
+        <h3>о внесении сведений</h3>
+      </header>
+
+      <main>
+        <p>Общество с ограниченной ответственностью «Тревел Технологии»</p>
+        <p>(ИНН 7731340252)</p>
+        <p><strong>Реестровый номер: 8241</strong></p>
+      </main>
+
+      <section>
+        <p>Осауленко А.П.</p>
+        <p>Директор Ассоциации "ТУРИПОМОЩЬ"</p>
+      </section>
+
+      <footer>
+        <address>
+          Ассоциация "Объединение туроператоров в сфере выездного туризма "ТУРИПОМОЩЬ"<br />
+          101000, г. Москва, ул. Мясницкая, дом 47<br />
+          Тел. +7 (499) 678-12-03<br />
+          e-mail: office@tourpom.ru
+        </address>
+      </footer>
 
     {% if about.history %}
         <section>
@@ -23,26 +51,19 @@
 
     <section aria-label="Promotional videos">
         <h2>Videos About Us</h2>
-
-        {% if about.videos %}
-            {% for video_url in about.videos %}
-                <figure>
-                    <video width="600" controls preload="metadata" >
-                        <source src="{{ video_url }}" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                    <figcaption>Video about the company</figcaption>
-                </figure>
-            {% endfor %}
-        {% else %}
-            <p>No videos available at the moment.</p>
-        {% endif %}
+        <figure>
+            <video width="600" controls preload="metadata">
+                <source src="/static/videos/ai.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <figcaption>Video about the company</figcaption>
+        </figure>
     </section>
 
     <section aria-label="Alternative video embed">
         <h2>Featured Video</h2>
         <object 
-            data="{{ about.featured_video_url }}" 
+            data="/static/videos/flowers.mp4" 
             width="600" height="400" type="video/mp4" 
             aria-label="Featured company video">
             <p>Your browser does not support this video format.</p>

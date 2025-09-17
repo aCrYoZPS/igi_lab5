@@ -4,7 +4,7 @@
 <main>
     <section aria-labelledby="reviews-header">
         <h2 id="reviews-header">Reviews:</h2>
-        <ul>
+        <ol>
         {% for review in reviews %}
             <li itemscope itemtype="http://schema.org/Review" class="review">
                 <article>
@@ -26,21 +26,21 @@
                     </section>
                     {% if user.is_authenticated and user == review.author %}
                     <nav aria-label="Review actions">
-                        <a href="{% url 'edit_review' review.pk %}" class="button" role="button">
+                        <button onclick="location.href='{% url 'edit_review' review.pk %}'" class="button" type="button">
                             Edit Review
-                        </a>
-                        <a href="{% url 'delete_review' review.pk %}" class="button" role="button">
+                        </button>
+                        <button onclick="location.href='{% url 'delete_review' review.pk %}'" class="button" type="button">
                             Delete Review
-                        </a>
+                        </button>
                     </nav>
                     {% endif %}
                 </article>
             </li>
         {% endfor %}
-        </ul>
-        <a href="{% url 'add_review' %}" class="button" role="button">
+        </ol>
+        <button onclick="location.href='{% url 'add_review' %}'" class="button" type="button">
             Leave a review
-        </a>
+        </button>
     </section>
 </main>
 {% endblock %}

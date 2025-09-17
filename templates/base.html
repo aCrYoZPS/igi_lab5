@@ -24,7 +24,7 @@
         <li><a href="{% url 'services' %}" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a></li>
         <li><a href="{% url 'orders' %}" {% if request.resolver_match.url_name == 'orders' or request.resolver_match.namespace == 'orders' %}aria-current="page"{% endif %}>Orders</a></li>
         <li><a href="{% url 'reviews' %}" {% if request.resolver_match.url_name == 'reviews' %}aria-current="page"{% endif %}>Reviews</a></li>
-        <li><a href="{% url 'client_profile' %}" {% if request.resolver_match.url_name == 'client_profile' %}aria-current="page"{% endif %}>Clients</a></li>
+        <li><a href="{% url 'client_profile' %}" {% if request.resolver_match.url_name == 'client_profile' %}aria-current="page"{% endif %}>Profile</a></li>
         <li><a href="{% url 'stats' %}" {% if request.resolver_match.url_name == 'stats' %}aria-current="page"{% endif %}>Stats</a></li>
       </ul>
     </nav>

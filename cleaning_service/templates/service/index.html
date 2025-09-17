@@ -1,17 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}HELLO{% endblock %}
-
-
 {% block content %}
-    <h1> SERVER IP IS {{ip}}</h1>
-    <div class="article_card">
-        <hr>
-        <h2> {{article.title}} </h2>
-        <h3> By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
-        {{article.summary}} <br>
-        <button onclick="window.location.href='{% url 'article' article.id %}'">
-            Read more
-        </button>
-        <hr>
-    </div>
+    <section>
+        <header>
+            <img src="{% static 'images/cleaning.png' %}" alt="Site Logo" style="max-height: 80px;">
+        </header>
+
+        <h1>Server IP is {{ ip }}</h1>
+
+        <article class="article_card">
+            <header>
+                <h2>{{ article.title }}</h2>
+                <p>
+                    <strong>By {{ article.author }}</strong>,
+                    <time datetime="{{ article.publication_date|date:"Y-m-d\TH:i:s" }}">
+                        {{ article.publication_date|date:"d/m/Y H:i" }}
+                    </time>
+                </p>
+            </header>
+            <p>{{ article.summary }}</p>
+            <footer>
+                <button type="button" onclick="window.location.href='{% url 'article' article.id %}'">
+                    Read more
+                </button>
+            </footer>
+        </article>
+
+        <aside class="ad-banners" aria-label="Advertisement Banners" style="margin: 2em 0;">
+            <img src="{% static 'images/ad1.png' %}" alt="Advertisement Banner 1" style="width:100%; max-height:150px; object-fit: contain;">
+            <img src="{% static 'images/ad2.png' %}" alt="Advertisement Banner 2" style="width:100%; max-height:150px; object-fit: contain; margin-top: 1em;">
+        </aside>
+
+        <section class="partners" aria-label="Partner Companies" style="margin-top: 3em;">
+            <h3>Our Partners</h3>
+            <ul>
+                <li>
+                    <a href="https://www.google.com">
+                        <img src="{% static 'images/google.png' %}" alt="Google" style="height: 60px;">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://trite.ru/">
+                        <img src="{% static 'images/3t.jpg' %}" alt="3t" style="height: 60px;">
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </section>
 {% endblock %}
