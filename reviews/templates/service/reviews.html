@@ -6,19 +6,23 @@
         <h2 id="reviews-header">Reviews:</h2>
         <ol>
         {% for review in reviews %}
-            <li itemscope itemtype="http://schema.org/Review" class="review">
-                <article>
+            <li>
+                <article itemscope itemtype="http://schema.org/Review" class="review">
                     <header>
-                        <h3 itemprop="name">{{ review.title }} | <span itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-                            <span itemprop="ratingValue">{{ review.score }}</span>/10
-                        </span></h3>
-                        <h4>
-                            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                                <span itemprop="name">{{ review.author }}</span>
-                            </span> 
-                            <time itemprop="datePublished" datetime="{{ review.publication_date|date:'Y-m-d' }}">
+                        <h3 itemprop="name">
+                            {{ review.title }} |
+                            <time datetime="{{ review.publication_date|date:'Y-m-d' }}" itemprop="datePublished" style="font-weight: normal; font-size: smaller;">
                                 {{ review.publication_date|date:"d/m/Y" }}
                             </time>
+                            <meta itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" content="{{ review.score }}">
+                            <meta itemprop="ratingValue" content="{{ review.score }}">
+                            {{ review.score }}/10
+                        </h3>
+                        <h4>
+                            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                <meta itemprop="name" content="{{ review.author }}">
+                                {{ review.author }}
+                            </span>
                         </h4>
                     </header>
                     <section itemprop="reviewBody">

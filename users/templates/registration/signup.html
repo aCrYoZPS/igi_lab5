@@ -9,7 +9,7 @@
       <form method="post">
         {% csrf_token %}
         
-        <div>
+        <section>
           <h3>Account Information</h3>
           username: {{ form.username }} <br>
           first name: {{ form.first_name }} <br>
@@ -17,15 +17,15 @@
           email: {{ form.email }}<br>
           password: {{ form.password1 }}<br>
           password confirmation {{ form.password2 }}<br>
-        </div>
+        </section>
 
-        <div>
+        <section>
           <h3>Client Information</h3>
           contact name: {{ form.name }}<br>
           phone number: {{ form.contact_number }}<br>
           client type: {{ form.client_type }}<br>
           timezone: {{form.timezone}}<br>
-        </div>
+        </section>
 
         <button type="submit">Sign up</button>
       </form>

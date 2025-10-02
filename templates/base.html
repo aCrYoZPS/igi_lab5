@@ -40,11 +40,11 @@
     {% if user.is_authenticated %}
       <form action="{% url 'logout' %}" method="post" aria-label="Logout form">
         {% csrf_token %}
-        <button type="submit">Logout</button>
+        <button type="submit" title="logout">Logout</button>
       </form>
     {% else %}
       <form action="{% url 'login' %}" method="get" aria-label="Login form">
-        <button type="submit">Log In</button>
+        <button type="submit" title="login">Log In</button>
       </form>
     {% endif %}
   </footer>

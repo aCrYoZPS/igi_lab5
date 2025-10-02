@@ -47,6 +47,23 @@
     <section>
         <h2>Contact info:</h2>
         <p>{{ about.contact_info }}</p>
+        <p 
+            id="52"
+            class="exampleClass"
+            style="color: blue; font-weight: bold;"
+            lang="en"
+            dir="ltr"
+            tabindex="0"
+            accesskey="p"
+            draggable="true"
+            contenteditable="true"
+            spellcheck="true"
+            title="Tooltip text for this paragraph"
+            translate="yes"
+            hidden="true"
+        >
+            This is a paragraph with all global attributes.
+        </p>
     </section>
 
     <section aria-label="Promotional videos">
@@ -70,6 +87,14 @@
         </object>
     </section>
 
+    <section aria-label="Fav song">
+        <h2>My Audio</h2>
+    <audio controls>
+            <source src="/static/audios/twc.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
     <iframe
         width="600"
         height="400"
@@ -79,5 +104,13 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
     </iframe>
+    
+    <blockquote cite="https://en.wikipedia.org/wiki/HTML">
+      "HTML is the standard markup language for documents designed to be displayed in a web browser."
+      <footer>— Source: <cite><a href="https://en.wikipedia.org/wiki/HTML" target="_blank" rel="noopener">Wikipedia - HTML</a></cite></footer>
+    </blockquote>
+
+    <p>As Mark Twain said, <q cite="https://www.brainyquote.com/quotes/mark_twain_385177">The secret of getting ahead is getting started.</q></p>
+
 </section>
 {% endblock %}
