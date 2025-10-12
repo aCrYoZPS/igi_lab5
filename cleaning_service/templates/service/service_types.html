@@ -5,9 +5,9 @@
         <h2>Service types:</h2>
         {% for service_type in service_types %}
             <article class="service_type" aria-labelledby="service-name-{{ forloop.counter }}">
-                <header>
+                <div class="service-header">
                     <h3 id="service-name-{{ forloop.counter }}">{{ service_type.name }}</h3>
-                </header>
+                </div>
                 <p>{{ service_type.description }}</p>
             </article>
         {% endfor %}

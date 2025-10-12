@@ -5,15 +5,21 @@
     <article class="article">
         <h1>{{article.title}}</h1>
         <h4>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h4>
+        <p class="article_content">
         {% if article.img %}
-            <img src="{{ article.img }}" alt="article pic" width="600">
+            <img class="article_image"
+                 src="{{ article.img }}"
+                 alt="article pic"
+                 width="600">
         {% else %}
             {% load static %}
-            <img src="{% static 'images/default.jpeg' %}" 
+            <img class="article_image"
+                 src="{% static 'images/default.jpeg' %}" 
                  alt="default pic"
                  width="200">
         {% endif %}
-        <p>{{article.content}}</p>
+            {{article.content}}
+        </p>
         <button onclick="window.location.href='{% url 'articles' %}'">
            Back to news 
         </button>

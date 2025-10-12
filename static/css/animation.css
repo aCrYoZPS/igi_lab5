@@ -1,0 +1,203 @@
+.scene {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+    background: #fff;
+    font-family: Roboto, sans-serif;
+}
+
+.floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+
+.floor.dirty {
+    opacity: 1;
+    animation: floorDirtyVisible 6s forwards;
+}
+
+.floor.clean {
+    opacity: 0;
+    animation: floorCleanAppear 6s forwards;
+    animation-delay: 2.5s;
+}
+
+/* Метла */
+.broom {
+    position: absolute;
+    bottom: 120px;
+    left: -150px;
+    width: 150px;
+    animation: broomSweep 6s forwards;
+    animation-delay: 1s;
+    opacity: 0;
+    z-index: 5;
+}
+
+/* Окно грязное и чистое */
+.window {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+}
+
+.window.dirty {
+    opacity: 0;
+    animation: windowDirtyAppear 6s forwards;
+    animation-delay: 7s;
+}
+
+.window.clean {
+    opacity: 0;
+    animation: windowCleanAppear 6s forwards;
+    animation-delay: 10s;
+}
+
+/* Губка */
+.sponge {
+    position: absolute;
+    top: 200px;
+    right: -100px;
+    width: 100px;
+    animation: spongeWipe 6s forwards;
+    animation-delay: 7s;
+    opacity: 0;
+    z-index: 5;
+}
+
+/* Название компании */
+.company-name {
+    position: absolute;
+    bottom: 100px;
+    width: 100%;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    opacity: 0;
+    animation: companyNameFadeIn 3s forwards;
+    animation-delay: 14s;
+    z-index: 10;
+}
+
+/* Анимации */
+@keyframes broomSweep {
+    0% {
+        left: -150px;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        left: 100%;
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes floorDirtyVisible {
+
+    0%,
+    70% {
+        opacity: 1;
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes floorCleanAppear {
+
+    0%,
+    60% {
+        opacity: 1;
+    }
+
+    70%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes windowDirtyAppear {
+
+    0%,
+    30% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes windowCleanAppear {
+
+    0%,
+    60% {
+        opacity: 1;
+    }
+
+    70%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes spongeWipe {
+    0% {
+        right: -100px;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        right: 70%;
+        opacity: 1;
+    }
+
+    100% {
+        right: 70%;
+        opacity: 0;
+    }
+}
+
+@keyframes companyNameFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

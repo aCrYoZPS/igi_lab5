@@ -2,12 +2,13 @@
 {% block title %}vacancies{% endblock %}
 {% block content %}
     <section aria-label="Job Vacancies">
-        <h2>We are looking for a:</h2>
+    <h2>We are looking for a:</h2>
+    <div class= "vacancy_page">
         {% for vacancy in vacancies %}
             <article class="vacancy" aria-labelledby="job-title-{{ forloop.counter }}">
-                <header>
+                <div class="vacancy-header">
                     <h3 id="job-title-{{ forloop.counter }}">{{ vacancy.job_title }}</h3>
-                </header>
+                </div>
                 <section>
                     <p>{{ vacancy.job_description }}</p>
                     {% if vacancy.job_type %}
@@ -16,5 +17,6 @@
                 </section>
             </article>
         {% endfor %}
+    </div>
     </section>
 {% endblock %}

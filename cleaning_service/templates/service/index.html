@@ -1,51 +1,84 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}HELLO{% endblock %}
+{% block title %}Cleaning Service - Home{% endblock %}
 {% block content %}
-    <section>
-        <header>
-            <img src="{% static 'images/cleaning.png' %}" alt="Site Logo" style="max-height: 80px;">
-        </header>
+    <main>
+        <section class="hero-section">
+            <div class="hero-content text-center">
+                <img src="{% static 'images/cleaning.png' %}" alt="Site Logo" class="logo-transform" style="max-height: 120px;">
+                <h1 class="company-name">Professional Cleaning Service</h1>
+                <p class="hero-description">Server IP: {{ ip }}</p>
+            </div>
+        </section>
 
-        <h1>Server IP is {{ ip }}</h1>
-
-        <article class="article_card">
-            <header>
-                <h2>{{ article.title }}</h2>
-                <p>
-                    <strong>By {{ article.author }}</strong>,
-                    <time datetime="{{ article.publication_date|date:"Y-m-d\TH:i:s" }}">
-                        {{ article.publication_date|date:"d/m/Y H:i" }}
-                    </time>
+        <section class="latest-article">
+            <article class="article_card">
+                <h2>{{article.title}}</h2>
+                <h3>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
+                <p class="article_summary">
+                    {{article.summary}} 
                 </p>
-            </header>
-            <p>{{ article.summary }}</p>
-            <footer>
-                <button type="button" onclick="window.location.href='{% url 'article' article.id %}'">
+                <button onclick="window.location.href='{% url 'article' article.id %}'">
                     Read more
                 </button>
-            </footer>
-        </article>
+            </article>
+        </section>
 
-        <aside class="ad-banners" aria-label="Advertisement Banners" style="margin: 2em 0;">
-        <img src="{% static 'images/ad1-720p.png' %}"srcset="{% static 'images/ad1-720p.png' %} 1x,{% static 'images/ad2.png' %} 2x, {%static 'images/ad3.png'%} 3x">
-            <img src="{% static 'images/ad2.png' %}" alt="Advertisement Banner 2" style="width:100%; max-height:150px; object-fit: contain; margin-top: 1em;">
+        <aside class="ad-banners" aria-label="Advertisement Banners">
+            <h3>Special Offers</h3>
+            <img src="{% static 'images/ad1-720p.png' %}" 
+                 srcset="{% static 'images/ad1-720p.png' %} 1x, {% static 'images/ad2.png' %} 2x, {% static 'images/ad3.png' %} 3x"
+                 alt="Advertisement Banner 1">
+            <img src="{% static 'images/ad2.png' %}" 
+                 alt="Advertisement Banner 2" 
+                 style="width:100%; max-height:150px; object-fit: contain; margin-top: 1em;">
         </aside>
 
-        <section class="partners" aria-label="Partner Companies" style="margin-top: 3em;">
-            <h3>Our Partners</h3>
+        <section class="partners" aria-label="Partner Companies">
+            <h3>Our Trusted Partners</h3>
             <ul>
                 <li>
-                    <a href="https://www.google.com">
-                        <img src="{% static 'images/google.png' %}" alt="Google" style="height: 60px;">
+                    <a href="https://www.google.com" title="Visit Google">
+                        <img src="{% static 'images/google.png' %}" alt="Google Partner">
+                        <span class="partner-name">Google</span>
                     </a>
                 </li>
                 <li>
-                    <a href="https://trite.ru/">
-                        <img src="{% static 'images/3t.jpg' %}" alt="3t" style="height: 60px;">
+                    <a href="https://trite.ru/" title="Visit 3T Company">
+                        <img src="{% static 'images/3t.jpg' %}" alt="3T Company Partner">
+                        <span class="partner-name">3T Company</span>
                     </a>
                 </li>
             </ul>
         </section>
-    </section>
+
+        <section class="services-preview">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>House Cleaning</h3>
+                    <p>Professional residential cleaning services for your home.</p>
+                    <button onclick="window.location.href='{% url 'services' %}'">Learn More</button>
+                </div>
+                <div class="service-item">
+                    <h3>Office Cleaning</h3>
+                    <p>Commercial cleaning solutions for your business.</p>
+                    <button onclick="window.location.href='{% url 'services' %}'">Learn More</button>
+                </div>
+                <div class="service-item">
+                    <h3>Deep Cleaning</h3>
+                    <p>Thorough cleaning for special occasions or moving.</p>
+                    <button onclick="window.location.href='{% url 'services' %}'">Learn More</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <blockquote cite="https://example.com/testimonial">
+                <q lang="ru">The best cleaning service I've ever used! Professional, reliable, and thorough.</q>
+                <footer>— <cite>Sarah Johnson, Happy Customer</cite></footer>
+            </blockquote>
+        </section>
+    </main>
 {% endblock %}

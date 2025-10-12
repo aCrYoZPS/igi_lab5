@@ -34,6 +34,22 @@ def privacy_policy(request):
     return render(request, "service/privacy_policy.html", {"policy": PrivacyPolicy.objects.last(), "tz_info": get_tz(request.user)})
 
 
+def preloader(request):
+    return render(request, "service/preloader.html")
+
+
+def animation(request):
+    return render(request, "service/animation.html")
+
+
+def certificate(request):
+    return render(request, "service/certificate.html")
+
+
+def table_test(request):
+    return render(request, "service/table_test.html")
+
+
 def faq(request):
     return render(request, "service/faq.html", {"faqs": FAQ.objects.all(), "tz_info": get_tz(request.user)})
 

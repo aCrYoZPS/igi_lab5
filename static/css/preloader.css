@@ -1,0 +1,175 @@
+:root {
+    --dot-size: 20px;
+    --split-distance: 24px;
+    --line-height: 4px;
+    --animation-duration: 3s;
+}
+
+body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.preloader {
+    display: flex;
+    gap: 40px;
+}
+
+.dot-container {
+    position: relative;
+    width: calc(var(--split-distance) * 2 + var(--dot-size));
+    height: 40px;
+}
+
+/* Shared dot styles */
+.dot {
+    position: absolute;
+    top: 50%;
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* The two split dots positioned initially overlapping center */
+.dot.left {
+    left: calc(50% - var(--dot-size) / 2);
+    animation-name: split-move-left;
+    animation-duration: var(--animation-duration);
+}
+
+.dot.right {
+    left: calc(50% - var(--dot-size) / 2);
+    animation-name: split-move-right;
+    animation-duration: var(--animation-duration);
+}
+
+/* The connecting line between split dots */
+.line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: var(--line-height);
+    background: transparent;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    animation: line-grow var(--animation-duration) ease-in-out infinite alternate;
+}
+
+/* The 3 main dot colors (rainbow) */
+.dot-container:nth-child(1) .dot {
+    background: linear-gradient(90deg, #ff0000, #ff7f00);
+}
+
+.dot-container:nth-child(2) .dot {
+    background: linear-gradient(90deg, #ffff00, #00ff00);
+}
+
+.dot-container:nth-child(3) .dot {
+    background: linear-gradient(90deg, #0000ff, #4b0082);
+}
+
+/* Animations */
+
+@keyframes split-move-left {
+    0% {
+        left: 50%;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    40% {
+        left: calc(50% - var(--split-distance));
+        width: calc(var(--dot-size) / 2);
+        height: calc(var(--dot-size) / 2);
+        transform: translateX(0) translateY(-50%) scale(1);
+    }
+
+    60% {
+        left: calc(50% - var(--split-distance));
+        width: calc(var(--dot-size) / 2);
+        height: calc(var(--dot-size) / 2);
+        opacity: 1;
+        transform: translateX(0) translateY(-50%) scale(1);
+    }
+
+    100% {
+        left: 50%;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes split-move-right {
+    0% {
+        left: 50%;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    40% {
+        left: calc(50% + var(--split-distance));
+        width: calc(var(--dot-size) / 2);
+        height: calc(var(--dot-size) / 2);
+        transform: translateX(0) translateY(-50%) scale(1);
+    }
+
+    60% {
+        left: calc(50% + var(--split-distance));
+        width: calc(var(--dot-size) / 2);
+        height: calc(var(--dot-size) / 2);
+        opacity: 1;
+        transform: translateX(0) translateY(-50%) scale(1);
+    }
+
+    100% {
+        left: 50%;
+        width: var(--dot-size);
+        height: var(--dot-size);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes line-grow {
+    0% {
+        left: 50%;
+        width: 0;
+        background: transparent;
+        opacity: 0;
+    }
+
+    40% {
+        left: calc(50% - var(--split-distance));
+        width: calc(var(--split-distance) * 2);
+        background: currentColor;
+        opacity: 1;
+    }
+
+    60% {
+        left: calc(50% - var(--split-distance));
+        width: calc(var(--split-distance) * 2);
+        background: currentColor;
+        opacity: 1;
+    }
+
+    100% {
+        left: 50%;
+        width: 0;
+        background: transparent;
+        opacity: 0;
+    }
+}

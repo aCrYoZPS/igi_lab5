@@ -1,17 +1,24 @@
 {% extends "base.html" %}
-{% block title %}HELLO{% endblock %}
-
+{% block title %}News - Latest Articles{% endblock %}
 
 {% block content %}
-    {% for article in articles %}
-        <div class="article_card">
-            <h2> {{article.title}} </h2>
-            <h3> By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
-            {{article.summary}} <br>
-            <button onclick="window.location.href='{% url 'article' article.id %}'">
-                Read more
-            </button>
-            <hr>
-        </div>
-    {% endfor %}
+    <main>
+        <section class="news-section">
+            <h1>Latest News</h1>
+            <div class="flexbox_articles">
+                {% for article in articles %}
+                    <div class="article_card">
+                        <h2>{{article.title}}</h2>
+                        <h3>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
+                        <p class="article_summary">
+                            {{article.summary}} 
+                        </p>
+                        <button onclick="window.location.href='{% url 'article' article.id %}'">
+                            Read more
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
 {% endblock %}

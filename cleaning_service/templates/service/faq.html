@@ -4,9 +4,11 @@
 
 {% block content %}
     {% for faq in faqs %}
+    <section>
         <details class="question_answer">
             <summary> Q: {{faq.question}} </summary>
             <p> A: {{faq.answer}}<br>Answered on {{faq.answer_date|date:"d/m/Y H:i"}}</p>
         </details>
+    </section>
     {% endfor %}
 {% endblock %}

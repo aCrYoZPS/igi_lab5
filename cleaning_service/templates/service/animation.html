@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>animation</title>
+  <link rel="stylesheet" href="{% static 'css/animation.css' %}" type="text/css" />
+</head>
+<body>
+    <div class="scene">
+            <img src="{% static 'images/dirty_floor.png' %}" alt="Пол грязный" class="floor dirty" />
+            <img src="{% static 'images/clean_floor.png' %}" alt="Пол чистый" class="floor clean" />
+            <img src="{% static 'images/broom.png' %}" alt="Метла" class="broom" />
+
+            <img src="{% static 'images/dirty_glass.png' %}" alt="Окно грязное" class="window dirty" />
+            <img src="{% static 'images/clean_glass.png' %}" alt="Окно чистое" class="window clean" />
+            <img src="{% static 'images/sponge.png' %}" alt="Губка" class="sponge" />
+
+      <div class="company-name">CLEANING COMPANY</div>
+    </div>
+</body>
+</html>

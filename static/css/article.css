@@ -1,0 +1,11 @@
+.article_image {
+    float: left;
+    margin-right: 15px;
+}
+
+.article_content {
+    column-count: 2;
+    column-gap: 20px;
+    text-align: justify;
+    float: none;
+}

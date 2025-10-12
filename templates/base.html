@@ -8,6 +8,8 @@
   <title>Cleaning Service</title>
   <link rel="shortcut icon" href="{% static 'images/cleaning.png' %}" type="image/x-icon" />
   <link rel="icon" href="{% static 'images/cleaning.png' %}" type="image/x-icon" />
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'css/article.css' %}" type="text/css" />
 </head>
 <body>
   <header>
@@ -26,6 +28,7 @@
         <li><a href="{% url 'reviews' %}" {% if request.resolver_match.url_name == 'reviews' %}aria-current="page"{% endif %}>Reviews</a></li>
         <li><a href="{% url 'client_profile' %}" {% if request.resolver_match.url_name == 'client_profile' %}aria-current="page"{% endif %}>Profile</a></li>
         <li><a href="{% url 'stats' %}" {% if request.resolver_match.url_name == 'stats' %}aria-current="page"{% endif %}>Stats</a></li>
+        <li><a href="{% url 'articles' %}" {% if request.resolver_match.url_name == 'articles' %}aria-current="page"{% endif %}>News</a></li>
       </ul>
     </nav>
   </header>
