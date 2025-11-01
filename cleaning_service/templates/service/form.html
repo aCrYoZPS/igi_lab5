@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Form{% endblock %}
+{% block content %}
+    <main>
+        <section>
+            <form>
+                <input type="text" name="req" value="THIS IS REQUIRED" required>
+                <input type="text" name="nreq" value="THIS IS NOT REQUIRED">
+            <form>
+        </section>
+    </main>
+{% endblock %}

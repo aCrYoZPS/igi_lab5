@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import FileResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 from django.db.models import Q
@@ -34,6 +35,10 @@ def privacy_policy(request):
     return render(request, "service/privacy_policy.html", {"policy": PrivacyPolicy.objects.last(), "tz_info": get_tz(request.user)})
 
 
+def form(request):
+    return render(request, "service/form.html")
+
+
 def preloader(request):
     return render(request, "service/preloader.html")
 
@@ -48,6 +53,13 @@ def certificate(request):
 
 def table_test(request):
     return render(request, "service/table_test.html")
+
+
+def file_test(request):
+    file_path = "/home/acryoz/vpo/lab3/testfile.txt"
+    file_object = open(file_path, "rb")
+    response = FileResponse(file_object, as_attachment=True)
+    return response
 
 
 def faq(request):

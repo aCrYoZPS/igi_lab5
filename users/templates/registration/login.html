@@ -4,7 +4,7 @@
 {% block content %}
   {% load socialaccount %}
   <h2>Login</h2>
-  <form method="post">
+  <form class="login_form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>

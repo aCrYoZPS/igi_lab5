@@ -1,7 +1,5 @@
-/* ===== ИМПОРТ ШРИФТОВ ===== */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap');
 
-/* ===== БАЗОВЫЕ СТИЛИ И СЕЛЕКТОРЫ ЭЛЕМЕНТОВ ===== */
 * {
     margin: 0;
     padding: 0;
@@ -24,8 +22,6 @@ body {
     padding-top: 70px;
 }
 
-/* ===== СЕЛЕКТОРЫ АТРИБУТОВ ===== */
-/* Селектор атрибута с определенным значением */
 [aria-current="page"] {
     background-color: #4CAF50;
     color: white;
@@ -167,7 +163,6 @@ ul li:nth-child(3n) {
     padding-left: 10px;
 }
 
-/* ===== ПСЕВДОКЛАССЫ ДЛЯ ФОРМ ===== */
 input:enabled {
     border: 2px solid #4CAF50;
     background-color: #f9f9f9;
