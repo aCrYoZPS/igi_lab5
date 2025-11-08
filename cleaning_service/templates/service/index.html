@@ -23,16 +23,61 @@
                 </button>
             </article>
         </section>
+        <section>
+        <form id="sliderControlForm">
+            <input type="checkbox" id="loop" name="loop" value="true">
+            <label for="loop">loop</label><br>
 
-        <aside class="ad-banners" aria-label="Advertisement Banners">
-            <h3>Special Offers</h3>
-            <img src="{% static 'images/ad1-720p.png' %}" 
-                 srcset="{% static 'images/ad1-720p.png' %} 1x, {% static 'images/ad2.png' %} 2x, {% static 'images/ad3.png' %} 3x"
-                 alt="Advertisement Banner 1">
-            <img src="{% static 'images/ad2.png' %}" 
-                 alt="Advertisement Banner 2" 
-                 style="width:100%; max-height:150px; object-fit: contain; margin-top: 1em;">
-        </aside>
+            <input type="checkbox" id="navs" name="navs" value="true">
+            <label for="navs">navs</label><br>
+
+            <input type="checkbox" id="pags" name="pags" value="true">
+            <label for="pags">pagination</label><br>
+
+            <input type="checkbox" id="auto" name="auto" value="true">
+            <label for="auto">auto</label><br>
+
+            <input type="checkbox" id="stopMouseHover" name="stopMouseHover" value="true">
+            <label for="stopMouseHover">stop on hover</label><br>
+
+            <label for="delay">delay:</label>
+            <input type="number" id="delay" name="delay" min="1" step="1" value="5"><br>
+            <br>
+
+            <button type="button" onclick="applySettings()">Применить настройки</button>
+        </form>
+        </section>
+        <!--<section>-->
+            <div class="slideshow-container" id="sliderContainer">
+              <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="{% static 'images/cleaning1.jpeg' %}" style="width:100%">
+                <div class="text">Cleaning 1</div>
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="{% static 'images/cleaning2.jpeg' %}" style="width:100%">
+                <div class="text">Cleaning 2</div>
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="{% static 'images/cleaning3.jpeg' %}" style="width:100%">
+                <div class="text">Cleaning 3</div>
+              </div>
+
+              <a class="navs-prev" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="navs-next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+            <div id="pagination_dots" style="text-align:center">
+              <span class="slider_dot" onclick="currentSlide(1)"></span>
+              <span class="slider_dot" onclick="currentSlide(2)"></span>
+              <span class="slider_dot" onclick="currentSlide(3)"></span>
+            </div>
+        <!--</section>-->
 
         <section class="partners" aria-label="Partner Companies">
             <h3>Our Trusted Partners</h3>

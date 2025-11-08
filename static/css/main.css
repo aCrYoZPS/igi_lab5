@@ -7,6 +7,16 @@
     cursor: url("../images/cursor_resized.svg") 4 4, auto;
 }
 
+html[data-theme='light'] {
+    --background-color: white;
+    --text-color: black;
+}
+
+html[data-theme='dark'] {
+    --background-color: black;
+    --text-color: white;
+}
+
 html {
     font-size: 16px;
     scroll-behavior: smooth;
@@ -17,9 +27,24 @@ body {
     line-height: 1.6;
     color: #333;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: var(--background-color);
+    color: var(--text-color);
     background-attachment: fixed;
     min-height: 100vh;
     padding-top: 70px;
+    visibility: hidden;
+}
+
+.preloader_container {
+    visibility: visible;
+}
+
+.nav_header {
+    visibility: hidden;
+}
+
+.navigation_buttons {
+    visibility: hidden;
 }
 
 [aria-current="page"] {
@@ -347,7 +372,7 @@ p {
 /* ===== ПОЗИЦИОНИРОВАНИЕ ===== */
 /* Фиксированная навигация */
 header {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
     right: 0;
@@ -398,17 +423,17 @@ header {
     right: 0 !important;
     z-index: 1000 !important;
     display: block !important;
-    visibility: visible !important;
+    visibility: visible;
 }
 
 header nav {
     display: block !important;
-    visibility: visible !important;
+    visibility: visible;
 }
 
 header nav ul {
     display: flex !important;
-    visibility: visible !important;
+    visibility: visible;
 }
 
 /* Позиционирование для статьи */

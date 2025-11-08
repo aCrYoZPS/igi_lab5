@@ -5,7 +5,11 @@
     --animation-duration: 3s;
 }
 
-body {
+.preloader_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background: #111;
     display: flex;
     justify-content: center;
@@ -16,6 +20,7 @@ body {
 .preloader {
     display: flex;
     gap: 40px;
+    z-index: 9999;
 }
 
 .dot-container {
