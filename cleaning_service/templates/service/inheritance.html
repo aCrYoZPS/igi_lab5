@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}JS Inheritance{% endblock %}
+{% block content %}
+<section>
+    <form id="dateForm">
+        Месяц: <input type="text" id="month" required /><br/>
+        День: <input type="number" id="day" min="1" max="31" required /><br/>
+        Комментарий: <input type="text" id="comment" /><br/>
+        <button type="button" id="addButton">Добавить дату</button>
+    </form>
+    <h3>Все даты:</h3>
+    <ul id="dateList"></ul>
+    <button id="showResult">Показать результат (лето / зима)</button>
+    <pre id="result"></pre>
+</section>
+  <script src="{% static 'js/inheritance.js' %}"></script>
+{% endblock %}

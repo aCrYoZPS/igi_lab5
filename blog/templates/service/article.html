@@ -1,7 +1,17 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Article{% endblock %}
 
 {% block content %}
+<style>
+body {overflow-x: hidden;}
+</style>
+ <section id="cleanersContainer">
+      <img src="{% static 'images/male_cleaner.png' %}" id="left_cleaner" />
+      <img src="{% static 'images/female_cleaner.png' %}" id="right_cleaner" />
+</section>
+<script src="{% static 'js/scrolling.js' %}"></script>
+<section>
     <article class="article">
         <h1>{{article.title}}</h1>
         <h4>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h4>
@@ -24,4 +34,5 @@
            Back to news 
         </button>
     </article>
+</section>
 {% endblock %}

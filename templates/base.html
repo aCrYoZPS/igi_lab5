@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="author" content="aCrYoZ" />
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{% static 'css/article.css' %}" type="text/css" />
   <link rel="stylesheet" href="{% static 'css/preloader.css' %}" type="text/css" />
   <link rel="stylesheet" href="{% static 'css/slider.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'css/scrolling.css' %}" type="text/css" />
 </head>
 <body>
 <div class="preloader_container">
@@ -66,15 +67,18 @@
       <form action="{% url 'logout' %}" method="post" aria-label="Logout form">
         {% csrf_token %}
         <button type="submit" title="logout">Logout</button>
+        <button id="theme_switch" type="button" onclick="toggleTheme()">Switch theme</button>
       </form>
     {% else %}
       <form action="{% url 'login' %}" method="get" aria-label="Login form">
         <button type="submit" title="login">Log In</button>
+        <button id="theme_switch" type="button" onclick="toggleTheme()">Switch theme</button>
       </form>
     {% endif %}
   </footer>
   </div>
   <script src="{% static 'js/preloader.js' %}"></script>
   <script src="{% static 'js/slider.js' %}"></script>
+  <script src="{% static 'js/theme_switch.js' %}"></script>
 </body>
 </html>

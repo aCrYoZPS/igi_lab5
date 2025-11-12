@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Charts{% endblock %}
+
+{% block content %}
+ <section id="cleanersContainer">
+      <img src="{% static 'images/male_cleaner.png' %}" id="left_cleaner" />
+      <img src="{% static 'images/female_cleaner.png' %}" id="right_cleaner" />
+</section>
+<script src="{% static 'js/scrolling.js' %}"></script>
+{% endblock %}

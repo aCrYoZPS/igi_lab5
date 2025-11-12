@@ -8,14 +8,17 @@
                 <img src="{% static 'images/cleaning.png' %}" alt="Site Logo" class="logo-transform" style="max-height: 120px;">
                 <h1 class="company-name">Professional Cleaning Service</h1>
                 <p class="hero-description">Server IP: {{ ip }}</p>
+                <button id="find-me">Show my location</button><br />
+                <p id="latitude"></p>
+                <p id="longitude"></p>
             </div>
         </section>
 
-        <section class="latest-article">
-            <article class="article_card">
+        <section id="parallaxed_container" class="latest-article">
+            <article id="parallaxed" class="article_card">
                 <h2>{{article.title}}</h2>
                 <h3>By {{article.author}}, published on {{article.publication_date|date:"d/m/Y H:i"}}</h3>
-                <p class="article_summary">
+                <p id="parallaxed_text" class="article_summary">
                     {{article.summary}} 
                 </p>
                 <button onclick="window.location.href='{% url 'article' article.id %}'">
@@ -28,10 +31,10 @@
             <input type="checkbox" id="loop" name="loop" value="true">
             <label for="loop">loop</label><br>
 
-            <input type="checkbox" id="navs" name="navs" value="true">
+            <input type="checkbox" id="navs" name="navs" value="true" checked>
             <label for="navs">navs</label><br>
 
-            <input type="checkbox" id="pags" name="pags" value="true">
+            <input type="checkbox" id="pags" name="pags" value="true", checked>
             <label for="pags">pagination</label><br>
 
             <input type="checkbox" id="auto" name="auto" value="true">
@@ -126,4 +129,7 @@
             </blockquote>
         </section>
     </main>
+  <script src="{% static 'js/articles_paralax.js' %}"></script>
+  <script src="{% static 'js/alerts.js' %}"></script>
+  <script src="{% static 'js/geolocation.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Charts{% endblock %}
+
+{% block content %}
+<section id="chartContainer">
+    <p id="iterationNumber"> Number of iterations: 1 </p>
+    <input type="range" min="1" max="100" value="1" step="1" id="taylorIters">
+    <div style="width: 100%;"><canvas id="chart"></canvas></div>
+</section>
+<section>
+<table id="myTable">
+  <thead><tr><th>x</th><th>n</th><th>f(x)</th><th>fTaylor(x)</th><th>eps</th></tr></thead>
+  <tbody></tbody>
+</table>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<script type="module" src="{% static 'js/charts_math.js' %}"></script>
+{% endblock %}

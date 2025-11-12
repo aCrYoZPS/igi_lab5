@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Custom element{% endblock %}
+
+{% block content %}
+<section>
+    <datalist id="colors">
+      <option value="#ff0000"></option>
+      <option value="#00ff00"></option>
+      <option value="#0000ff"></option>
+    </datalist>
+    <div>
+        <form id="sliderControlForm">
+            <input type="checkbox" id="useList" name="useList">
+            <label for="useList">Use datalist</label><br>
+
+            <input type="checkbox" id="disabled" name="disabled">
+            <label for="disabled">Disabled</label><br>
+
+            <input type="text" id="name" name="name">
+            <label for="name">Name</label><br>
+
+            <input type="text" id="value" name="value" placeholder="For example: #ffffff">
+            <label for="value">Color value</label><br>
+
+            <br>
+            <button type="button" id="createInput">Создать элемент</button>
+            <button type="button" id="deleteInput">Удалить элемент</button>
+            <br>
+            <div id="errorMsg" style="color: red; margin-bottom: 10px; display: none;"></div>
+        </form>
+
+    </div>
+    <br>
+    <div id="inputContainer">
+    </div>
+</section>
+<script src="{% static 'js/custom_input.js' %}"></script>
+{% endblock %}

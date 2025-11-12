@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.http import FileResponse
+from django.http import FileResponse, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 from django.db.models import Q
 from blog.models import Article
-from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client
+from .models import FAQ, Vacancy, About, PrivacyPolicy, PromoCode, ServiceType, Service, Order, OrderItem, Client, Staff
 from .filters import ServiceFilter
 from globals.logging import LoggingMixin
 from globals.utils import get_tz
@@ -15,6 +15,7 @@ from .forms import OrderItemFormSet, OrderForm
 import json
 import requests
 from http import HTTPStatus
+import datetime
 
 
 def index(request):
@@ -31,12 +32,28 @@ def index(request):
     return render(request, "service/index.html", {"article": Article.objects.last(), "ip": ip, "tz_info": get_tz(request.user)})
 
 
+def custom_input(request):
+    return render(request, "service/custom_element.html")
+
+
+def cleaners_scroll(request):
+    return render(request, "service/cleaners_scroll.html")
+
+
+def inheritance(request):
+    return render(request, "service/inheritance.html")
+
+
 def privacy_policy(request):
     return render(request, "service/privacy_policy.html", {"policy": PrivacyPolicy.objects.last(), "tz_info": get_tz(request.user)})
 
 
 def form(request):
     return render(request, "service/form.html")
+
+
+def charts(request):
+    return render(request, "service/charts.html")
 
 
 def preloader(request):
@@ -55,6 +72,26 @@ def table_test(request):
     return render(request, "service/table_test.html")
 
 
+def contacts_page(request):
+    context = {
+        'today_date': datetime.date.today().isoformat(),
+    }
+    return render(request, "service/js_table.html", context)
+
+
+def contacts_data(request):
+    staff_qs = Staff.objects.select_related('user').all()
+    data = [{
+        'id': s.id,
+        'full_name': s.user.get_full_name() or s.user.username,
+        'role': s.role or '',
+        'contact_number': s.contact_number,
+        'hire_date': s.hire_date.strftime('%Y-%m-%d') if s.hire_date else '',
+        'email': '',
+    } for s in staff_qs]
+    return JsonResponse({'contacts': data})
+
+
 def file_test(request):
     file_path = "/home/acryoz/vpo/lab3/testfile.txt"
     file_object = open(file_path, "rb")
@@ -67,7 +104,10 @@ def faq(request):
 
 
 def vacancies(request):
-    return render(request, "service/vacancies.html", {"vacancies": Vacancy.objects.all(), "tz_info": get_tz(request.user)})
+    all_vacancies = list(Vacancy.objects.values('job_title', 'job_description', 'job_type'))
+    return render(request, "service/vacancies.html", {"vacancies_json": json.dumps(all_vacancies),
+                                                      "vacancies": Vacancy.objects.all(),
+                                                      "tz_info": get_tz(request.user)})
 
 
 def about(request):

@@ -1,22 +1,34 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}vacancies{% endblock %}
 {% block content %}
     <section aria-label="Job Vacancies">
+    <label for="cardsPerPage">Cards per page:</label>
+    <select id="cardsPerPage" name="cardsPerPage">
+      <option value="2">2</option>
+      <option value="5" selected>5</option>
+      <option value="10">10</option>
+    </select>
     <h2>We are looking for a:</h2>
-    <div class= "vacancy_page">
-        {% for vacancy in vacancies %}
-            <article class="vacancy" aria-labelledby="job-title-{{ forloop.counter }}">
-                <div class="vacancy-header">
-                    <h3 id="job-title-{{ forloop.counter }}">{{ vacancy.job_title }}</h3>
-                </div>
-                <section>
-                    <p>{{ vacancy.job_description }}</p>
-                    {% if vacancy.job_type %}
-                        <p><strong>Service type:</strong> {{ vacancy.job_type }}</p>
-                    {% endif %}
-                </section>
-            </article>
-        {% endfor %}
+    <div id="vacancyContainer" class="vacancy_page">
+        <!-- {% for vacancy in vacancies %} -->
+        <!--     <article class="vacancy" aria-labelledby="job-title-{{ forloop.counter }}"> -->
+        <!--         <div class="vacancy-header"> -->
+        <!--             <h3 id="job-title-{{ forloop.counter }}">{{ vacancy.job_title }}</h3> -->
+        <!--         </div> -->
+        <!--         <section> -->
+        <!--             <p>{{ vacancy.job_description }}</p> -->
+        <!--             {% if vacancy.job_type %} -->
+        <!--                 <p><strong>Service type:</strong> {{ vacancy.job_type }}</p> -->
+        <!--             {% endif %} -->
+        <!--         </section> -->
+        <!--     </article> -->
+        <!-- {% endfor %} -->
     </div>
+    <div id="paginationControls"></div>
     </section>
+    <script>
+      const vacancies = JSON.parse('{{ vacancies_json|escapejs }}');
+    </script>
+    <script src="{% static 'js/vacancies_pagination.js' %}"></script>
 {% endblock %}

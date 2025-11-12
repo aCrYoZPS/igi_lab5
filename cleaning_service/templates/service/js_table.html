@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}JS Form{% endblock %}
+{% block content %}
+    <main>
+        <section>
+<h1>Список сотрудников</h1>
+
+<button id="addBtn">Добавить сотрудника</button>
+
+<div id="addForm" style="display: none;margin: 15px 0;">
+    <h3>Добавить сотрудника</h3>
+    <form id="employeeForm" novalidate>
+        <label>
+            ФИО: <br>
+            <input type="text" id="fullName" required>
+        </label><br>
+        <label>
+            Роль: <br>
+            <input type="text" id="role" required>
+        </label><br>
+        <label>
+            Контактный номер: <br>
+            <input type="text" id="contactNumber" required placeholder="Например: +375 (29) 111-22-33">
+        </label><br>
+        <label>
+            Дата приёма: <br>
+            <input type="date" id="hireDate" required max="{{ today_date }}">
+        </label><br>
+        <label>
+            Почта: <br>
+            <input type="email" id="email" required placeholder="example@domain.com">
+        </label><br><br>
+        <label>
+            URL: <br>
+            <input type="text" id="urlInput" required placeholder="https://example.com/index.html">
+        </label><br><br>
+
+        <div id="validationMessages" style="color:red;"></div>
+
+        <button type="button" id="addToTableBtn" disabled>Добавить в таблицу</button>
+        <button type="button" id="cancelAddBtn">Отмена</button>
+    </form>
+</div>
+
+<div style="margin: 15px 0;">
+    <input type="text" id="filterInput" placeholder="Введите текст для фильтрации">
+    <button id="filterBtn">Найти</button>
+</div>
+
+<table id="contactsTable" border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse; width: 100%;">
+    <thead>
+    <tr>
+        <th data-column="select">Выбрать</th>
+        <th data-column="full_name" class="sortable">ФИО</th>
+        <th data-column="role" class="sortable">Роль</th>
+        <th data-column="contact_number" class="sortable">Контактный номер</th>
+        <th data-column="hire_date" class="sortable">Дата найма</th>
+        <th data-column="email" class="sortable">Почта</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Rows loaded via JS -->
+    </tbody>
+</table>
+
+<div id="js_form_pagination" style="margin: 15px 0;"></div>
+
+<button id="rewardBtn" style="margin: 10px 0;">Премировать</button>
+
+<div id="detailsBlock" style="border:1px solid #ccc; padding:10px; margin-top: 15px; display:none;">
+    <h3>Детальная информация</h3>
+    <div id="detailsContent"></div>
+</div>
+
+<div id="rewardText" style="margin-top: 15px; font-weight: bold;"></div>
+        </section>
+    </main>
+  <script src="{% static 'js/js_table.js' %}"></script>
+{% endblock %}
+
